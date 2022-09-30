@@ -1,0 +1,506 @@
+{
+  "id": "node-red-iris-IRIS-CREATE",
+  "type": "subflow",
+  "name": "IRIS_CREATE",
+  "info": "<p>Creates a new IRIS Class.</p>\n\n<details>\n    <summary>Required</summary>\n    <p>\n        <ul>\n            <li><a href=\"https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native\">Native API</a> installed in Node-Red.</li>\n            <li><b>Node.IRISInterface</b> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Import Native API</summary>\n    <p>\n        In <code>.node-red\\settings.js</code> add Module in <code>functionGlobalContext</code>!\n        \n<pre>\nfunctionGlobalContext: {\n    iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')\n}\n</pre>\n</p>\n</details>\n\n<details>  \n    <summary>Connect to IRIS</summary>\n    <p>\n        Set connection properties via the node properties.\n    </p>\n</details>\n\n<details>\n    <summary>Check Connection</summary>\n    <p>\n        If enabled the node will check every 5 seconds if a connection is established and will show the status.\n    </p>\n</details>\n\n<details>\n    <summary>Create a Class</summary>\n    <p>\n    Pass a JSON-Object or JSON-String in the <code>msg.data</code> field in form of:\n<pre>\n{\n    \"package\": \"PackageName\",\n    \"className\": \"ClassName\",\n    \"properties\":[\n        {\n            \"name\": \"Property1Name\",\n            \"type\": \"Property1Type\"\n        },\n        {\n            \"name\": \"Property2Name\",\n            \"type\": \"Property2Type\"\n        }\n        ...\n        ]\n}\n</pre>\nTypes must be <a href=\"https://docs.intersystems.com/irislatest/csp/documatic/%25CSP.Documatic.cls\">Objectscript-Types</a>!<br>\n(For String, Integer, Boolean and Double you can also write as Javascript types)\n\nCan optional has a field <code>superclasses</code> with Superclasses as a String-List.\nEvery class created with this node will extends <code>%Persistent</code> and <code>%JSON,Adaptor</code>.\n</p>\n</details>\n<font size = -2>\n<br>\n<br>\nby Philipp B.\n<br>\nPowered by <a href= \"https://www.intersystems.com/\" style=\"color: #00b4ae\">InterSystems</a>.\n</font>\n<style>\ndetails > summary {\n  cursor: pointer;\n  font-size:20px;\n  background: #eee;\n  margin-bottom: 1rem;\n  padding: 0.5rem 1rem;\n}\n</style>",
+  "category": "IRIS",
+  "in": [
+    {
+      "x": 40,
+      "y": 80,
+      "wires": [
+        {
+          "id": "3153232c27f393ac"
+        },
+        {
+          "id": "51c8891816eae0b8"
+        }
+      ]
+    }
+  ],
+  "out": [
+    {
+      "x": 1070,
+      "y": 80,
+      "wires": [
+        {
+          "id": "1a7e92fb5db9032a",
+          "port": 0
+        },
+        {
+          "id": "b48fea25a4ca8dda",
+          "port": 0
+        },
+        {
+          "id": "0d06f87acf3c7c30",
+          "port": 0
+        }
+      ]
+    }
+  ],
+  "env": [
+    {
+      "name": "IP",
+      "type": "str",
+      "value": "localhost",
+      "ui": {
+        "icon": "font-awesome/fa-address-book",
+        "type": "input",
+        "opts": {
+          "types": ["str", "env"]
+        }
+      }
+    },
+    {
+      "name": "Port",
+      "type": "num",
+      "value": "1972",
+      "ui": {
+        "icon": "font-awesome/fa-hashtag",
+        "type": "input",
+        "opts": {
+          "types": ["num", "env"]
+        }
+      }
+    },
+    {
+      "name": "Namespace",
+      "type": "str",
+      "value": "TRAINING",
+      "ui": {
+        "icon": "font-awesome/fa-database",
+        "type": "input",
+        "opts": {
+          "types": ["str", "env"]
+        }
+      }
+    },
+    {
+      "name": "Username",
+      "type": "str",
+      "value": "_SYSTEM",
+      "ui": {
+        "icon": "font-awesome/fa-male",
+        "type": "input",
+        "opts": {
+          "types": ["str", "env"]
+        }
+      }
+    },
+    {
+      "name": "Password",
+      "type": "str",
+      "value": "sys",
+      "ui": {
+        "icon": "font-awesome/fa-ellipsis-h",
+        "type": "input",
+        "opts": {
+          "types": ["str", "env"]
+        }
+      }
+    },
+    {
+      "name": "Check Connection",
+      "type": "bool",
+      "value": "true",
+      "ui": {
+        "icon": "font-awesome/fa-adjust",
+        "type": "checkbox"
+      }
+    }
+  ],
+  "meta": {
+    "module": "IRIS_Create",
+    "version": "0.0.1",
+    "author": "Philipp B.",
+    "keywords": "IRIS,InterSystems,Database"
+  },
+  "color": "#3FADB5",
+  "inputLabels": ["Input"],
+  "outputLabels": ["Status"],
+  "icon": "icons/InterSystems.svg",
+    "status": {
+    "x": 840,
+    "y": 440,
+    "wires": [
+      {
+        "id": "2b237afbbee2e0e8",
+        "port": 0
+      }
+    ]
+  },
+  "flow": [
+    {
+      "id": "58952c72d76f9e06",
+      "type": "change",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Set Connection Properties",
+      "rules": [
+        {
+          "t": "set",
+          "p": "conn.IP",
+          "pt": "msg",
+          "to": "IP",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "conn.Port",
+          "pt": "msg",
+          "to": "Port",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "conn.Namespace",
+          "pt": "msg",
+          "to": "namespace",
+          "tot": "flow"
+        },
+        {
+          "t": "set",
+          "p": "conn.Username",
+          "pt": "msg",
+          "to": "Username",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "conn.Password",
+          "pt": "msg",
+          "to": "Password",
+          "tot": "env"
+        }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 590,
+      "y": 120,
+      "wires": [["b48fea25a4ca8dda"]]
+    },
+    {
+      "id": "0d11a2b22bc6e8b1",
+      "type": "inject",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "check Connection",
+      "props": [
+        {
+          "p": "payload"
+        }
+      ],
+      "repeat": "5",
+      "crontab": "",
+      "once": true,
+      "onceDelay": 0.1,
+      "topic": "",
+      "payload": "",
+      "payloadType": "date",
+      "x": 150,
+      "y": 440,
+      "wires": [["7ce07ec1613d4ee4"]]
+    },
+    {
+      "id": "8b83f1dcc8a3c72e",
+      "type": "change",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Set Connection Properties",
+      "rules": [
+        {
+          "t": "set",
+          "p": "IP",
+          "pt": "msg",
+          "to": "IP",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "Port",
+          "pt": "msg",
+          "to": "Port",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "Namespace",
+          "pt": "msg",
+          "to": "namespace",
+          "tot": "flow"
+        },
+        {
+          "t": "set",
+          "p": "Username",
+          "pt": "msg",
+          "to": "Username",
+          "tot": "env"
+        },
+        {
+          "t": "set",
+          "p": "Password",
+          "pt": "msg",
+          "to": "Password",
+          "tot": "env"
+        }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 490,
+      "y": 440,
+      "wires": [["2b237afbbee2e0e8"]]
+    },
+    {
+      "id": "64023ce93fa91249",
+      "type": "comment",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Show Connection Status",
+      "info": "",
+      "x": 170,
+      "y": 400,
+      "wires": []
+    },
+    {
+      "id": "e69d1e44f7ebd9fe",
+      "type": "comment",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Do the Action",
+      "info": "",
+      "x": 90,
+      "y": 20,
+      "wires": []
+    },
+    {
+      "id": "7ce07ec1613d4ee4",
+      "type": "switch",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "",
+      "property": "Check Connection",
+      "propertyType": "env",
+      "rules": [
+        {
+          "t": "true"
+        }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 310,
+      "y": 440,
+      "wires": [["8b83f1dcc8a3c72e"]]
+    },
+    {
+      "id": "893bc84617917cf7",
+      "type": "catch",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Catch if not JSON Object",
+      "scope": ["1196a47aecfb4ff0"],
+      "uncaught": false,
+      "x": 290,
+      "y": 20,
+      "wires": [["1a7e92fb5db9032a"]]
+    },
+    {
+      "id": "2b237afbbee2e0e8",
+      "type": "function",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "checkConnection",
+      "func": "//const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n//import irisnative from 'intersystems-iris-native';\nvar ip = msg.IP;\nvar port = msg.Port;\nvar namespace = msg.Namespace;\nvar username = msg.Username;\nvar password = msg.Password;\n\n// Create connection to InterSystems IRIS\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    msg.payload = ({fill: \"green\",text:\"Connected\"});\n}\ncatch(e){\n    msg.payload = ({fill: \"red\",text:\"Not Connected\"});\n    msg.error = e;\n    return msg;\n}\nconnection.close();\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 710,
+      "y": 440,
+      "wires": [[]]
+    },
+    {
+      "id": "b48fea25a4ca8dda",
+      "type": "function",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "createClass",
+      "func": "//Check if field exists\nif(!msg.data.hasOwnProperty(\"package\")){\n    throw \"Could not find package field!\"\n}\nif(!msg.data.hasOwnProperty(\"className\")){\n    throw \"Could not find className field!\"\n}\n\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n\n\n//Get irisnative instance\n    //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n\n//Set connection Properties\nvar ip = msg.conn.IP;\nvar port = msg.conn.Port;\nvar namespace = msg.conn.Namespace;\nvar username = msg.conn.Username;\nvar password = msg.conn.Password;\n\n// Create connection to InterSystems IRIS\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\n\nvar props = \"\";\nvar types = \"\";\n\nif(msg.data.hasOwnProperty(\"properties\")){\n    //Make String list if properties are given\n    msg.data[\"properties\"].forEach((prop)=>{\n        props += prop[\"name\"] + \",\";\n        types += parseType(prop[\"type\"]) + \",\";\n    });\n}\n\n//Get superclasses\nvar superclasses = msg.data[\"superclasses\"];\nif(superclasses == undefined){\n    superclasses = \"\";\n}\nif(props.length > 0){\n    //Cut off last comma\n    props = props.substring(0, props.length - 1);\n    types = types.substring(0, types.length -1);\n}\nvar result = 1;\ntry{\n    //Create the class\n    result = iris.classMethodValue(\"Node.IRISInterface\",\n                                        \"CreateClass\",\n                                        msg.conn.Namespace,\n                                        msg.data[\"package\"],\n                                        msg.data[\"className\"],\n                                        props,\n                                        types,\n                                        superclasses\n                                        );\n}\ncatch(e){\n    msg.error = \"Could not create Class:\\n\" + e;\n    msg.result = 0;\n    connection.close();\n    return msg;\n}\n\nvar result2 = 1;\n\ntry{\n    //Compile the class\n    result2 = iris.classMethodValue(\"Node.IRISInterface\",\n                                        \"CompileClass\",\n                                        msg.conn.Namespace,\n                                        msg.data[\"package\"],\n                                        msg.data[\"className\"]);\n}\ncatch(e){\n    msg.error = \"Could not compile Class:\\n\" + e;\n    msg.result = 0;\n    connection.close();\n    return msg;\n    \n}\nif(result != 1){\n    msg.result = result;\n}\nelse if(result2 != 1){\n    msg.result = result2;\n}\nelse{\n    msg.result = 1;\n}\n\nconnection.close();\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Parse javascript primtives to objectscript primitives\n//Works with int, double, string and boolean\nfunction parseType(type) {\n    switch (type.toUpperCase()) {\n        case \"STRING\":\n            return \"%String\";\n        case \"INTEGER\":\n            return \"%Integer\";\n        case \"INT\":\n            return \"%Integer\";\n        case \"DOUBLE\":\n            return \"%Double\";\n        case \"BOOLEAN\":\n            return \"%Boolean\";\n        default:\n            return type;\n    }\n    \n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "",
+      "libs": [],
+      "x": 790,
+      "y": 120,
+      "wires": [[]]
+    },
+    {
+      "id": "1196a47aecfb4ff0",
+      "type": "json",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Convert to JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": false,
+      "x": 350,
+      "y": 120,
+      "wires": [["58952c72d76f9e06"]]
+    },
+    {
+      "id": "1a7e92fb5db9032a",
+      "type": "function",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Log JSON Error",
+      "func": "throw \"Something went wrong with the JSON Object\";\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 540,
+      "y": 20,
+      "wires": [[]]
+    },
+    {
+      "id": "aa1f8d284bb9c6cb",
+      "type": "function",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "compileclass",
+      "func": "//const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n//import irisnative from 'intersystems-iris-native';\nvar ip = msg.conn.IP;\nvar port = msg.conn.Port;\nvar namespace = msg.conn.Namespace;\nvar username = msg.conn.Username;\nvar password = msg.conn.Password;\n\n// Create connection to InterSystems IRIS\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    msg.error = \"Could not connect to IRIS:\\n\" + e;\n    return msg;\n}   \n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\n/*\nvar props = \"\";\nvar types = \"\";\nmsg.data[\"properties\"].forEach((prop)=>{\n    props += prop[\"name\"] + \",\";\n    types += parseType(prop[\"type\"]) + \",\";\n});\nsuperclasses = msg.data[\"superclasses\"];\nif(superclasses == undefined){\n    superclasses = \"\";\n}\nprops = props.substring(0, props.length - 1);\ntypes = types.substring(0, types.length -1);\ntry{\n    var result = iris.classMethodValue(\"Node.IRISInterface\",\n                                        \"CreateClass\",\n                                        msg.conn.Namespace,\n                                        msg.data[\"package\"],\n                                        msg.data[\"className\"],\n                                        props,\n                                        types,\n                                        superclasses\n                                        );\n}\ncatch(e){\n    //if (e != \"Error: * [ERROR_SHARED_CON_ERROR]\"){\n        msg.error = \"Could not create Class:\\n\" + e;\n    //}\n}\n*/\ntry{\n  \n    var result2 = iris.classMethodValue(\"Node.IRISInterface\",\n                                        \"CompileClass\",\n                                        msg.conn.Namespace,\n                                        msg.data[\"package\"],\n                                        msg.data[\"className\"]);\n}\ncatch(e){\n    if (e != \"Error: * [ERROR_SHARED_CON_ERROR]\"){\n        msg.error = \"Could not compile Class:\\n\" + e;\n    }\n}\n//msg.result = result;\nmsg.result2 = result2;\nconnection.close();\nreturn msg;\n\nfunction parseType(type) {\n    switch (type.toUpperCase()) {\n        case \"STRING\":\n            return \"%String\";\n        case \"INTEGER\":\n            return \"%Integer\";\n        case \"INT\":\n            return \"%Integer\";\n        case \"DOUBLE\":\n            return \"%Double\";\n        case \"BOOLEAN\":\n            return \"%Boolean\";\n        default:\n            return type;\n    }\n    \n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 150,
+      "y": 620,
+      "wires": [[]]
+    },
+    {
+      "id": "07416504ebfb75b9",
+      "type": "comment",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Old Code",
+      "info": "",
+      "x": 140,
+      "y": 560,
+      "wires": []
+    },
+    {
+      "id": "f941c5747c294ef3",
+      "type": "switch",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "ifMsg.getNamespaceIsNotNull",
+      "property": "getNamespace",
+      "propertyType": "msg",
+      "rules": [
+        {
+          "t": "nnull"
+        }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 370,
+      "y": 240,
+      "wires": [["0d06f87acf3c7c30"]]
+    },
+    {
+      "id": "0d06f87acf3c7c30",
+      "type": "change",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "setMsg.getNamespace",
+      "rules": [
+        {
+          "t": "set",
+          "p": "getNamespace",
+          "pt": "msg",
+          "to": "namespace",
+          "tot": "flow"
+        }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 640,
+      "y": 240,
+      "wires": [[]]
+    },
+    {
+      "id": "257b70e15afe2ab3",
+      "type": "comment",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "Request Namespace",
+      "info": "",
+      "x": 340,
+      "y": 200,
+      "wires": []
+    },
+    {
+      "id": "3153232c27f393ac",
+      "type": "switch",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "ifMsg.dataIsNotNull",
+      "property": "data",
+      "propertyType": "msg",
+      "rules": [
+        {
+          "t": "nnull"
+        },
+        {
+          "t": "null"
+        }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 2,
+      "x": 130,
+      "y": 160,
+      "wires": [["1196a47aecfb4ff0"], ["f941c5747c294ef3"]],
+      "outputLabels": ["isNotNull", "isNull"]
+    },
+    {
+      "id": "51c8891816eae0b8",
+      "type": "switch",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "ifMsg.namespaceIsNotNull",
+      "property": "namespace",
+      "propertyType": "msg",
+      "rules": [
+        {
+          "t": "nnull"
+        }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 380,
+      "y": 320,
+      "wires": [["f00d9af6d4be4dfa"]]
+    },
+    {
+      "id": "f00d9af6d4be4dfa",
+      "type": "change",
+      "z": "node-red-iris-IRIS-CREATE",
+      "name": "setNamespaceOnRuntime",
+      "rules": [
+        {
+          "t": "set",
+          "p": "namespace",
+          "pt": "flow",
+          "to": "namespace",
+          "tot": "msg"
+        }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 660,
+      "y": 320,
+      "wires": [[]]
+    }
+  ]
+}

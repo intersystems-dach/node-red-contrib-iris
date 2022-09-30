@@ -1,0 +1,703 @@
+{
+    "id": "node-red-iris-IRIS-INSERT-VIA-File",
+    "type": "subflow",
+    "name": "IRIS_INSERT_VIA_FILE",
+    "info": "<p>Inserts data into the IRIS Database from a file.</p>\n\n<details>\n    <summary>Required</summary>\n    <p>\n        <ul>\n            <li><a href=\"https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native\">Native API</a> installed in Node-Red.</li>\n            <li><b>Node.IRISInterface</b> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Import Native API</summary>\n    <p>\n        In <code>.node-red\\settings.js</code> add Module in <code>functionGlobalContext</code>!\n        \n<pre>\nfunctionGlobalContext: {\n    iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')\n}\n</pre>\n</p>\n</details>\n\n<details>  \n    <summary>Connect to IRIS</summary>\n    <p>\n        Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.\n    </p>\n</details>\n\n<details>\n    <summary>Hold Connection</summary>\n    <p>\n        The connection will be hold as long as specified in the property, when no new messages arrives.\n    </p>\n</details>\n\n<details>\n    <summary>Check Connection</summary>\n    <p>\n        If enabled the node will check every 3 seconds if a connection is established and will show the status.\n    </p>\n</details>\n\n<details>\n    <summary>Connection Status</summary>\n    <p>\n        <ul>\n            <li><font color = \"red\">Not Connected</font>: No Connection established, because could not connect or disconnected manually.</li>\n            <li><font color = \"yellow\">On Hold</font>: The connection is not established, but will build a connection as soon as a message arrives.</li>\n            <li><font color = \"green\">Connected</font>: Connected to IRIS.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Filename</summary>\n    <p>\n        The file name must be set to an <b>absolute path</b>, otherwise the path will be relative to the Node-red directory.<br>\n        You can also set the filename during runtime, when you pass the filename in the <code>msg.filename</code> field.\n    </p>\n</details>\n\n<details>\n    <summary>File with names</summary>\n    <p>\n        If set to <code>true</code> the first line in the field must be the Fieldnames of the class. If set to <code>false</code> you have to pass the names as in array in the <code>msg.data.names</code> field.\n<pre>\nmsg.data.names = [\"Name\", \"Age\"];\n</pre>\n    </p>\n</details>\n\n<details>\n    <summary>Insert Data</summary>\n    <p>\n        Reads data from a file, where each row is a Dataset. The Seperator descripes how each column is seperated.<br>\n        E.g. the file with the Seperator \"<code>;</code>\":\n<pre>\nName;Age\nMax;42\nMoritz;21\nAnna;66\n...\n</pre>\n        By passing in a Message with the class name defined in <code>msg.data.className</code> you start the Insert.\n    </p>\n</details>\n\n<details>\n    <summary>Set Properties during runtime</summary>\n    <p>\n        <ul>\n            <li>Close connection during runtime with <code>msg.connect</code> set to <code>false</code> or <code>0</code>.</li>\n            <li>Reconnect during runtime with <code>msg.connect</code> set to <code>true</code> or <code>1</code>.</li>\n            <li>Set the namespace during runtime with <code>msg.namespace</code>.</li>\n            <li>To request the current namespace via runtime define a field <code>msg.getNamespace</code>.The current namespace will be written in this field.</li>\n         </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Exceptions</summary>\n    <p>\n        <ul>\n            <li>Throws an Error if <code>msg.data</code> is not correct or could not connect to IRIS.</li>\n            <li>Writes <code>1</code> into <code>msg.result</code>, when insert was successful. Writes <code>0</code> when it was unsuccesful, with the error message in <code>msg.error</code>.</li>\n        </ul>\n    </p>\n</details>\n<font size = -2>\n<br>\n<br>\nby Philipp B.\n<br>\nPowered by <a href= \"https://www.intersystems.com/\" style=\"color: #00b4ae\">InterSystems</a>.\n</font>\n<style>\ndetails > summary {\n  cursor: pointer;\n  font-size:20px;\n  background: #eee;\n  margin-bottom: 1rem;\n  padding: 0.5rem 1rem;\n}\n</style>",
+    "category": "IRIS",
+    "in": [
+        {
+            "x": 40,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "9b9efb9c13d4a55a"
+                },
+                {
+                    "id": "e9862c600d159a2c"
+                },
+                {
+                    "id": "f59555d26b6e6390"
+                },
+                {
+                    "id": "c540f692f0b316c1"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 1410,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "accc24a10311e835",
+                    "port": 0
+                },
+                {
+                    "id": "4106f9368d94bb92",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "IP",
+            "type": "str",
+            "value": "localhost",
+            "ui": {
+                "icon": "font-awesome/fa-address-book",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Port",
+            "type": "num",
+            "value": "1972",
+            "ui": {
+                "icon": "font-awesome/fa-hashtag",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Namespace",
+            "type": "str",
+            "value": "TRAINING",
+            "ui": {
+                "icon": "font-awesome/fa-database",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Username",
+            "type": "str",
+            "value": "_SYSTEM",
+            "ui": {
+                "icon": "font-awesome/fa-male",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Password",
+            "type": "str",
+            "value": "sys",
+            "ui": {
+                "icon": "font-awesome/fa-ellipsis-h",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "holdConnection",
+            "type": "num",
+            "value": "10",
+            "ui": {
+                "icon": "font-awesome/fa-clock-o",
+                "label": {
+                    "en-US": "Hold Connection (seconds)"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Filename",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "icon": "font-awesome/fa-file-text-o",
+                "label": {
+                    "en-US": "File name"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Seperator",
+            "type": "str",
+            "value": "",
+            "ui": {
+                "icon": "font-awesome/fa-strikethrough"
+            }
+        },
+        {
+            "name": "WithNames",
+            "type": "bool",
+            "value": "true",
+            "ui": {
+                "icon": "font-awesome/fa-navicon",
+                "label": {
+                    "en-US": "File with Names"
+                },
+                "type": "checkbox"
+            }
+        },
+        {
+            "name": "Check Connection",
+            "type": "bool",
+            "value": "true",
+            "ui": {
+                "icon": "font-awesome/fa-adjust",
+                "type": "checkbox"
+            }
+        }
+    ],
+    "meta": {
+        "module": "IRIS_Insert_viaFile",
+        "version": "0.0.2",
+        "author": "Philipp B.",
+        "keywords": "IRIS,InterSystems,Database"
+    },
+    "color": "#3FADB5",
+    "inputLabels": [
+        "Input"
+    ],
+    "outputLabels": [
+        "Status"
+    ],
+    "icon": "icons/InterSystems.svg",
+    "status": {
+        "x": 780,
+        "y": 500,
+        "wires": [
+            {
+                "id": "97b36ad0ef940587",
+                "port": 0
+            }
+        ]
+    },
+"flow":[
+    {
+        "id": "e0ae222d4e946feb",
+        "type": "inject",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "check Connection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 500,
+        "wires": [
+            [
+                "f28024f650c3c8f1"
+            ]
+        ]
+    },
+    {
+        "id": "99b6f657a3832048",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "Show Connection Status",
+        "info": "",
+        "x": 150,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "85dbd4d4c6ae1e4e",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "Do the Action",
+        "info": "",
+        "x": 90,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f28024f650c3c8f1",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "ifCheckConnection",
+        "property": "Check Connection",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 500,
+        "wires": [
+            [
+                "97b36ad0ef940587"
+            ]
+        ]
+    },
+    {
+        "id": "97b36ad0ef940587",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "checkConnection/PERF",
+        "func": "var conn = flow.get(\"conn\");\nif(conn.isClosed()){\n    var onHold = flow.get(\"onHold\")||false;\n    if(!onHold){\n        msg.payload = ({fill: \"red\",text:\"Not Connected\"});\n    }\n    else{\n        msg.payload = ({fill: \"yellow\",text:\"On Hold\"});\n    }\n}\nelse{\n    msg.payload = ({fill: \"green\",text:\"Connected\"});\n    flow.set(\"onHold\",-1);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "accc24a10311e835",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "execute insert sql on msg/PERF",
+        "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"className\")){\n    throw \"Could not find className field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"names\") && !env.get(\"WithNames\")){\n    throw \"Could not find names field!\";\n}\n\nif(env.get(\"Seperator\") == \"\"){\n    throw \"No Seperator defined!\";\n}\n\nvar rows = msg.payload.split(\"\\n\");\nvar sep = env.get(\"Seperator\");\nvar names;\nif(env.get(\"WithNames\")){\n    names = rows[0].split(sep);\n    rows.shift();\n}\nelse{\n    names = msg.data.names;\n}\nvar namesString = \"(\";\nvar qm = \"(\";\nfor(var i in names){\n    namesString += names[i];\n    qm += \"?\";\n    if(i < names.length-1){\n        namesString += \",\";\n        qm += \",\";\n    }\n}\nqm+=\")\";\nnamesString += \")\";\nvar sql = \"insert into \" + msg.data.className + \" \" + namesString +\n                \" values \" + qm;\n                \nconst namespace = flow.get(\"namespace\")\nconst iris = flow.get(\"iris\");\nvar result = 1;\nmsg.error = \"\";\n\nfor(i in rows){\n    try{\n        //Create value string list\n        var values = createValuesString(rows[i].split(sep));\n        if(i< rows.length-1){\n            values = values.substring(0,values.length-1);\n        }\n        else{\n            if(values == \"\"){\n                break;\n            }\n        }\n        //Insert\n        exInsert(sql, values);\n    }\n    catch(e){\n        var line = Number(i) + 1;\n        if(env.get(\"WithNames\")){\n            line += 1;\n        }\n        msg.error += \"Could not Insert at (\"+line+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n        result = 0;\n    }\n}\n\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nmsg.payload = msg.payloadBackup;\ndelete msg.payloadBackup;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n//Get the Objectscript type of the value\n//Works with %String, %Integer, %Double and %Boolean\nfunction getType(value){\n    var type = typeof value;\n    if(type == \"boolean\"){\n        return \"%Boolean\";\n    }\n    if(type == \"number\"){\n        if(String(value).includes(\".\")){\n            return \"%Double\";\n        }\n        return \"%Integer\";\n    }\n    return \"%String\";\n}\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+        "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
+        "libs": [],
+        "x": 1190,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9b9efb9c13d4a55a",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "ifMsg.dataIsNotNull",
+        "property": "data",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "21f3e68218abc827"
+            ],
+            [
+                "ee032152c9ad0c38"
+            ]
+        ],
+        "outputLabels": [
+            "isNotNull",
+            "isNull"
+        ]
+    },
+    {
+        "id": "e9862c600d159a2c",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "ifMsg.connectIsNotNull",
+        "property": "connect",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 280,
+        "wires": [
+            [
+                "723d2a2a02303140"
+            ]
+        ]
+    },
+    {
+        "id": "723d2a2a02303140",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "setConnectionOnRuntime",
+        "func": "flow.set(\"onHold\", false);\n\nif(msg.connect == false||0){\n    if(!flow.get(\"conn\").isClosed()){\n        flow.get(\"conn\").close();\n    }\n}\nelse if(flow.get(\"conn\").isClosed() && (msg.connect == true||1)){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        msg.error = e;\n        return msg;\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f59555d26b6e6390",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "ifMsg.namespaceIsNotNull",
+        "property": "namespace",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 320,
+        "wires": [
+            [
+                "761551f61095c8a2"
+            ]
+        ]
+    },
+    {
+        "id": "761551f61095c8a2",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "setNamespaceOnRuntime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "namespace",
+                "pt": "flow",
+                "to": "namespace",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee032152c9ad0c38",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "ifMsg.getNamespaceIsNotNull",
+        "property": "getNamespace",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "4106f9368d94bb92"
+            ]
+        ]
+    },
+    {
+        "id": "4106f9368d94bb92",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "setMsg.getNamespace",
+        "rules": [
+            {
+                "t": "set",
+                "p": "getNamespace",
+                "pt": "msg",
+                "to": "namespace",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7e523c30ccc9abc",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "Set Properties during runtime",
+        "info": "",
+        "x": 220,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d0ad353c6432ce57",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "Request Namespace",
+        "info": "",
+        "x": 480,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e3b7a12b729632bf",
+        "type": "file in",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 960,
+        "y": 100,
+        "wires": [
+            [
+                "accc24a10311e835"
+            ]
+        ]
+    },
+    {
+        "id": "cfd8a8b6c1d3fc8b",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "msg",
+                "to": "Filename",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 650,
+        "y": 40,
+        "wires": [
+            [
+                "5a15085872c3c770"
+            ]
+        ]
+    },
+    {
+        "id": "cd8a1908d147cc66",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "IDEA: with create class",
+        "info": "",
+        "x": 100,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "21f3e68218abc827",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "checkIfMsg.filenameIsNull",
+        "property": "filename",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "cfd8a8b6c1d3fc8b"
+            ],
+            [
+                "5a15085872c3c770"
+            ]
+        ],
+        "outputLabels": [
+            "isNull",
+            "isNotNull"
+        ]
+    },
+    {
+        "id": "5a15085872c3c770",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "backUpPayload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payloadBackup",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 100,
+        "wires": [
+            [
+                "e3b7a12b729632bf"
+            ]
+        ]
+    },
+    {
+        "id": "29119f9851e0d702",
+        "type": "trigger",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "holdConnectionTrigger",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "10",
+        "extend": true,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 540,
+        "y": 400,
+        "wires": [
+            [
+                "7262ee0ba6540873"
+            ]
+        ]
+    },
+    {
+        "id": "7b3a0bb545a70b3c",
+        "type": "inject",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "injectHoldConnection",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "c540f692f0b316c1"
+            ]
+        ]
+    },
+    {
+        "id": "7262ee0ba6540873",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "setOnHold",
+        "func": "if(msg.payload == 0 && !flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n    flow.set(\"onHold\", true);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c540f692f0b316c1",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT-VIA-File",
+        "name": "setDelay",
+        "func": "msg.delay = env.get(\"holdConnection\") * 1000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 400,
+        "wires": [
+            [
+                "29119f9851e0d702"
+            ]
+        ]
+    }
+]
+}

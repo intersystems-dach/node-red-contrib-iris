@@ -1,0 +1,1279 @@
+{
+    "id": "node-red-iris-IRIS",
+    "type": "subflow",
+    "name": "IRIS",
+    "info": "<p>Execute <b>INSERT</b>, <b>UPDATE</b>, <b>SELECT</b>, <b>DELETE</b> and <b>DDL</b> Statements.</p>\n\n<details>\n    <summary>Required</summary>\n    <p>\n        <ul>\n            <li><a href=\"https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native\">Native API</a> installed in Node-Red.</li>\n            <li><b>Node.IRISInterface</b> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Import Native API</summary>\n    <p>\n        In <code>.node-red\\settings.js</code> add Module in <code>functionGlobalContext</code>!\n        \n<pre>\nfunctionGlobalContext: {\n    iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')\n}\n</pre>\n</p>\n</details>\n\n<details>  \n    <summary>Connect to IRIS</summary>\n    <p>\n        Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.\n    </p>\n</details>\n\n<details>\n    <summary>Hold Connection</summary>\n    <p>\n        The connection will be hold as long as specified in the property, when no new messages arrives.\n    </p>\n</details>\n\n<details>\n    <summary>Check Connection</summary>\n    <p>\n        If enabled the node will check every 3 seconds if a connection is established and will show the status.\n    </p>\n</details>\n\n<details>\n    <summary>Connection Status</summary>\n    <p>\n        <ul>\n            <li><font color = \"red\">Not Connected</font>: No Connection established, because could not connect or disconnected manually.</li>\n            <li><font color = \"yellow\">On Hold</font>: The connection is not established, but will build a connection as soon as a message arrives.</li>\n            <li><font color = \"green\">Connected</font>: Connected to IRIS.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Execute Statement via JSON</summary>\n    <p>\n        Pass a JSON-Object in the <code>msg.data</code> with a field <b>\"sql\"</b> and an array field <b>\"values\"</b> with the values of the parameterized SQL-Statement\n        Example:\n<pre>\nmsg.data = {\n    \"sql\": \"SELECT * FROM pkg.ClassName WHERE Field1 = ? AND Field2 = ?\",\n    \"values\":[\n        Value1,\n        Value2\n        ]\n}\n</pre>\n</p>\n</details>\n\n<details>\n    <summary>Execute Statement via SQL Statement</summary>\n    <p>\n        Pass the SQL Statement as String in the <code>msg.data</code> field and the Node will parameterize the Statement itself. <b>Put whitespaces around primitives!</b>\n    </p>\n</details>\n\n<details>\n    <summary>Insert Statement</summary>\n    <p>\n        If you want to create the class via an Insert Statement, add a Property called <code>createClass</code> to the message object.\n    </p>\n</details>\n\n<details>\n    <summary>Result</summary>\n    <p>\n        The result of the Query will be a JSON Object.\n    </p>\n</details>\n\n<details>\n    <summary>Set Properties during runtime</summary>\n    <p>\n        <ul>\n            <li>Close connection during runtime with <code>msg.connect</code> set to <code>false</code> or <code>0</code>.</li>\n            <li>Reconnect during runtime with <code>msg.connect</code> set to <code>true</code> or <code>1</code>.</li>\n            <li>Set the namespace during runtime with <code>msg.namespace</code>.</li>\n            <li>To request the current namespace via runtime define a field <code>msg.getNamespace</code>. The current namespace will be written in this field.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Exceptions</summary>\n    <p>\n        <ul>\n        <li>Throws an Error if <code>msg.data</code> is not correct or could not connect to IRIS.</li>\n        <li>Throws an Error if the SQL-Statement is not valid.</li>\n        <li>Writes <code>1</code> into <code>msg.result</code>, when insert was successful.</li> <li>Writes <code>0</code> when it was unsuccesful, with the error message in <code>msg.error</code>.</li>\n        </ul>\n    </p>\n</details>\n\n<font size=-2>\n<br>\n<br>\nby Philipp B.\n<br>\nPowered by <a href= \"https://www.intersystems.com/\" style=\"color: #00b4ae\">InterSystems</a>.\n</font>\n<style>\ndetails > summary {\n  cursor: pointer;\n  font-size:20px;\n  background: #eee;\n  margin-bottom: 1rem;\n  padding: 0.5rem 1rem;\n}\n</style>\n",
+    "category": "IRIS",
+    "in": [
+        {
+            "x": 40,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "9596e04101430629"
+                },
+                {
+                    "id": "72b585824f7dd388"
+                },
+                {
+                    "id": "a97b231070435ee8"
+                },
+                {
+                    "id": "eb529cbf9141cf51"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 970,
+            "y": 300,
+            "wires": [
+                {
+                    "id": "5e15e2cd3cc99101",
+                    "port": 0
+                },
+                {
+                    "id": "fee5830a3b46be36",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "IP",
+            "type": "str",
+            "value": "localhost",
+            "ui": {
+                "icon": "font-awesome/fa-address-book",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Port",
+            "type": "num",
+            "value": "1972",
+            "ui": {
+                "icon": "font-awesome/fa-hashtag",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Namespace",
+            "type": "str",
+            "value": "TRAINING",
+            "ui": {
+                "icon": "font-awesome/fa-database",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Username",
+            "type": "str",
+            "value": "_SYSTEM",
+            "ui": {
+                "icon": "font-awesome/fa-male",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Password",
+            "type": "str",
+            "value": "sys",
+            "ui": {
+                "icon": "font-awesome/fa-ellipsis-h",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "holdConnection",
+            "type": "num",
+            "value": "10",
+            "ui": {
+                "icon": "font-awesome/fa-clock-o",
+                "label": {
+                    "en-US": "Hold Connection (seconds)"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Check Connection",
+            "type": "bool",
+            "value": "true",
+            "ui": {
+                "icon": "font-awesome/fa-adjust",
+                "type": "checkbox"
+            }
+        }
+    ],
+    "meta": {
+        "module": "IRIS",
+        "version": "0.0.3",
+        "author": "Philipp B.",
+        "keywords": "IRIS,InterSystems,Database"
+    },
+    "color": "#3FADB5",
+    "inputLabels": [
+        "Input"
+    ],
+    "outputLabels": [
+        "Status"
+    ],
+    "icon": "icons/InterSystems.svg",
+    "status": {
+        "x": 760,
+        "y": 760,
+        "wires": [
+            {
+                "id": "01ede61f02a8268f",
+                "port": 0
+            }
+        ]
+    },
+"flow":[
+  {
+      "id": "6750349e31b8dd45",
+      "type": "inject",
+      "z": "node-red-iris-IRIS",
+      "name": "check Connection",
+      "props": [
+          {
+              "p": "payload"
+          }
+      ],
+      "repeat": "3",
+      "crontab": "",
+      "once": true,
+      "onceDelay": 0.1,
+      "topic": "",
+      "payload": "",
+      "payloadType": "date",
+      "x": 170,
+      "y": 760,
+      "wires": [
+          [
+              "67eb55e7fb4d1ebf"
+          ]
+      ]
+  },
+  {
+      "id": "1da08338f9371a51",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "Show Connection Status",
+      "info": "",
+      "x": 190,
+      "y": 720,
+      "wires": []
+  },
+  {
+      "id": "1ecd224968315474",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "Do the Action",
+      "info": "",
+      "x": 90,
+      "y": 160,
+      "wires": []
+  },
+  {
+      "id": "67eb55e7fb4d1ebf",
+      "type": "switch",
+      "z": "node-red-iris-IRIS",
+      "name": "ifCheckConnection",
+      "property": "Check Connection",
+      "propertyType": "env",
+      "rules": [
+          {
+              "t": "true"
+          }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 370,
+      "y": 760,
+      "wires": [
+          [
+              "01ede61f02a8268f"
+          ]
+      ]
+  },
+  {
+      "id": "9596e04101430629",
+      "type": "switch",
+      "z": "node-red-iris-IRIS",
+      "name": "ifMsg.connectIsNotNull",
+      "property": "connect",
+      "propertyType": "msg",
+      "rules": [
+          {
+              "t": "nnull"
+          }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 420,
+      "y": 540,
+      "wires": [
+          [
+              "750614ad50d9fe30"
+          ]
+      ]
+  },
+  {
+      "id": "750614ad50d9fe30",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "setConnectionOnRuntime",
+      "func": "flow.set(\"onHold\", false);\n\nif(msg.connect == false||0){\n    if(!flow.get(\"conn\").isClosed()){\n        flow.get(\"conn\").close();\n    }\n}\nelse if(flow.get(\"conn\").isClosed() && (msg.connect == true||1)){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        msg.error = e;\n        return msg;\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\nreturn msg;\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 690,
+      "y": 540,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "72b585824f7dd388",
+      "type": "switch",
+      "z": "node-red-iris-IRIS",
+      "name": "ifMsg.namespaceIsNotNull",
+      "property": "namespace",
+      "propertyType": "msg",
+      "rules": [
+          {
+              "t": "nnull"
+          }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 440,
+      "y": 580,
+      "wires": [
+          [
+              "e4a586797d35e423"
+          ]
+      ]
+  },
+  {
+      "id": "e4a586797d35e423",
+      "type": "change",
+      "z": "node-red-iris-IRIS",
+      "name": "setNamespaceOnRuntime",
+      "rules": [
+          {
+              "t": "set",
+              "p": "namespace",
+              "pt": "flow",
+              "to": "namespace",
+              "tot": "msg"
+          }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 700,
+      "y": 580,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "01ede61f02a8268f",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "checkConnection/PERF",
+      "func": "var conn = flow.get(\"conn\");\nif(conn.isClosed()){\n    var onHold = flow.get(\"onHold\")||false;\n    if(!onHold){\n        msg.payload = ({fill: \"red\",text:\"Not Connected\"});\n    }\n    else{\n        msg.payload = ({fill: \"yellow\",text:\"On Hold\"});\n    }\n}\nelse{\n    msg.payload = ({fill: \"green\",text:\"Connected\"});\n    flow.set(\"onHold\",-1);\n}\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 590,
+      "y": 760,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "a97b231070435ee8",
+      "type": "switch",
+      "z": "node-red-iris-IRIS",
+      "name": "ifMsg.dataIsNotNull",
+      "property": "data",
+      "propertyType": "msg",
+      "rules": [
+          {
+              "t": "nnull"
+          },
+          {
+              "t": "null"
+          }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 2,
+      "x": 230,
+      "y": 220,
+      "wires": [
+          [
+              "8eaf5f376da33f8e"
+          ],
+          [
+              "53faaa04c8697b97"
+          ]
+      ],
+      "outputLabels": [
+          "isNotNull",
+          "isNull"
+      ]
+  },
+  {
+      "id": "53faaa04c8697b97",
+      "type": "switch",
+      "z": "node-red-iris-IRIS",
+      "name": "ifMsg.getNamespaceIsNotNull",
+      "property": "getNamespace",
+      "propertyType": "msg",
+      "rules": [
+          {
+              "t": "nnull"
+          }
+      ],
+      "checkall": "true",
+      "repair": false,
+      "outputs": 1,
+      "x": 470,
+      "y": 460,
+      "wires": [
+          [
+              "5e15e2cd3cc99101"
+          ]
+      ]
+  },
+  {
+      "id": "5e15e2cd3cc99101",
+      "type": "change",
+      "z": "node-red-iris-IRIS",
+      "name": "setMsg.getNamespace",
+      "rules": [
+          {
+              "t": "set",
+              "p": "getNamespace",
+              "pt": "msg",
+              "to": "namespace",
+              "tot": "flow"
+          }
+      ],
+      "action": "",
+      "property": "",
+      "from": "",
+      "to": "",
+      "reg": false,
+      "x": 740,
+      "y": 460,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "e88261226d7a697b",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "Set Properties during runtime",
+      "info": "",
+      "x": 440,
+      "y": 500,
+      "wires": []
+  },
+  {
+      "id": "dd3948e393ad79eb",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "Request Namespace",
+      "info": "",
+      "x": 440,
+      "y": 420,
+      "wires": []
+  },
+  {
+      "id": "7530cecdc50cceba",
+      "type": "trigger",
+      "z": "node-red-iris-IRIS",
+      "name": "holdConnectionTrigger",
+      "op1": "1",
+      "op2": "0",
+      "op1type": "num",
+      "op2type": "num",
+      "duration": "10",
+      "extend": true,
+      "overrideDelay": true,
+      "units": "s",
+      "reset": "",
+      "bytopic": "all",
+      "topic": "topic",
+      "outputs": 1,
+      "x": 580,
+      "y": 640,
+      "wires": [
+          [
+              "7dc668e444b262d1"
+          ]
+      ]
+  },
+  {
+      "id": "86147e564c98e301",
+      "type": "inject",
+      "z": "node-red-iris-IRIS",
+      "name": "injectHoldConnection",
+      "props": [
+          {
+              "p": "topic",
+              "vt": "str"
+          }
+      ],
+      "repeat": "",
+      "crontab": "",
+      "once": true,
+      "onceDelay": "0.1",
+      "topic": "",
+      "x": 180,
+      "y": 640,
+      "wires": [
+          [
+              "eb529cbf9141cf51"
+          ]
+      ]
+  },
+  {
+      "id": "7dc668e444b262d1",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "setOnHold",
+      "func": "if(msg.payload == 0 && !flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n    flow.set(\"onHold\", true);\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 790,
+      "y": 640,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "eb529cbf9141cf51",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "setDelay",
+      "func": "msg.delay = env.get(\"holdConnection\") * 1000;\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 380,
+      "y": 640,
+      "wires": [
+          [
+              "7530cecdc50cceba"
+          ]
+      ]
+  },
+  {
+      "id": "8eaf5f376da33f8e",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "",
+      "func": "let s = \"\";\nif(typeof msg.data == \"string\"){\n  s = msg.data;\n}\nelse if(typeof msg.data == \"object\" && msg.data.hasOwnProperty(\"sql\")){\n  s = msg.data.sql;\n}\nelse{\n    throw \"Could not find SQL-Statement!\";\n}\n\ns = s.trim().toUpperCase();\nif(s.startsWith(\"SELECT\")){\n    return [msg,null,null,null,null];\n}\nif(s.startsWith(\"INSERT\")){\n    return [null,msg,null,null,null];\n}\nif(s.startsWith(\"UPDATE\")){\n    return [null,null,msg,null,null];\n\n}\nif(s.startsWith(\"DELETE\")){\n    return [null,null,null,msg,null];\n}\n\nif(s.startsWith(\"DROP\") || s.startsWith(\"CREATE\") || s.startsWith(\"ALTER\")){\n    return [null,null,null,null,msg];\n}\n\nthrow \"SQL-Statement is not correct!\";\n",
+      "outputs": 5,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 460,
+      "y": 220,
+      "wires": [
+          [
+              "0eb929a86cfe7e7c"
+          ],
+          [
+              "6fc0670a098542d7"
+          ],
+          [
+              "aec8f3e11621204d"
+          ],
+          [
+              "d6f5933f07a5f3a9"
+          ],
+          [
+              "5a50759e4d395b74"
+          ]
+      ],
+      "outputLabels": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE",
+          null
+      ]
+  },
+  {
+      "id": "0eb929a86cfe7e7c",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "SELECT Out",
+      "mode": "link",
+      "links": [
+          "71eff3b1be1dd788"
+      ],
+      "x": 655,
+      "y": 140,
+      "wires": []
+  },
+  {
+      "id": "6fc0670a098542d7",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "INSERT Out",
+      "mode": "link",
+      "links": [
+          "33ecbefd40e15165"
+      ],
+      "x": 655,
+      "y": 180,
+      "wires": []
+  },
+  {
+      "id": "aec8f3e11621204d",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "UPDATE Out",
+      "mode": "link",
+      "links": [
+          "660f6ac0781eda90"
+      ],
+      "x": 655,
+      "y": 220,
+      "wires": []
+  },
+  {
+      "id": "d6f5933f07a5f3a9",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "DELETE Out",
+      "mode": "link",
+      "links": [
+          "cf2bbded02fac5c1"
+      ],
+      "x": 655,
+      "y": 260,
+      "wires": []
+  },
+  {
+      "id": "71eff3b1be1dd788",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "SELECT In",
+      "links": [
+          "0eb929a86cfe7e7c"
+      ],
+      "x": 145,
+      "y": 980,
+      "wires": [
+          [
+              "a96e9eac3ba33022"
+          ]
+      ]
+  },
+  {
+      "id": "33ecbefd40e15165",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "INSERT In",
+      "links": [
+          "6fc0670a098542d7"
+      ],
+      "x": 145,
+      "y": 1200,
+      "wires": [
+          [
+              "9f5e324c52bbc4c9"
+          ]
+      ]
+  },
+  {
+      "id": "660f6ac0781eda90",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "UPDATE In",
+      "links": [
+          "aec8f3e11621204d"
+      ],
+      "x": 145,
+      "y": 1380,
+      "wires": [
+          [
+              "9d3b573464d774cf"
+          ]
+      ]
+  },
+  {
+      "id": "cf2bbded02fac5c1",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "DELETE In",
+      "links": [
+          "d6f5933f07a5f3a9"
+      ],
+      "x": 145,
+      "y": 1560,
+      "wires": [
+          [
+              "8044cb4848db5a8c"
+          ]
+      ]
+  },
+  {
+      "id": "ab2de763b7848aa7",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "Catch if not JSON Object",
+      "scope": [
+          "8044cb4848db5a8c"
+      ],
+      "uncaught": false,
+      "x": 130,
+      "y": 1500,
+      "wires": [
+          [
+              "2cf7b4b14904e5a5"
+          ]
+      ]
+  },
+  {
+      "id": "2cf7b4b14904e5a5",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "parameterizeSQL",
+      "func": "\n//Zieht die primitiven Daten aus dem SQL Statement und ersetzt\n//diese mit einem ? zur parametisierung.\n//Gibt ein JSON Objekt zurück mit Feld:\n// - sql: beinhaltet das angepasste SQL Statement\n// - values: behinhaltet die tatsächlichen daten\n\n//var data = \"select * from pers.MyData where Name = 'Peter' AND Age = 17 GROUP BY Name HAVING ID > 71 ORDER BY Age DESC\";\nvar a = msg.data.split(\" \");\nvar sql = \"\";\nvar values = [];\nfor (i = 0; i < a.length; i++) {\n    if (parseToPrimitive(a[i]) == null)\n        sql += a[i] + \" \";\n    else{\n        sql += \"? \";\n        values.push(parseToPrimitive(a[i]));\n    }\n    \n}\n\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\nreturn msg;\n\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 370,
+      "y": 1500,
+      "wires": [
+          [
+              "8044cb4848db5a8c"
+          ]
+      ],
+      "inputLabels": [
+          "from \"CAtch if not JSON Object\""
+      ],
+      "outputLabels": [
+          "to \"Make JSON Object\""
+      ]
+  },
+  {
+      "id": "8044cb4848db5a8c",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": true,
+      "x": 310,
+      "y": 1560,
+      "wires": [
+          [
+              "8051911e307776c9"
+          ]
+      ]
+  },
+  {
+      "id": "8051911e307776c9",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "execute delete sql on msg/PERF",
+      "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"DELETE\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Delete Statement found!\";\n}\n\n\nconst iris = flow.get(\"iris\");\nconst namespace = flow.get(\"namespace\");\n\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\ntry{\n    //Create value string list\n    values = createValuesString(msg.data[\"values\"]);\n    //Insert\n    result = exInsert(msg.data[\"sql\"], values);\n}\ncatch(e){\n    msg.error = \"Could not Delete:\\n\" + e;\n    result = 0;\n}\n\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\n// Code added here will be run once\n// whenever the node is started.\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =  env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace =  env.get(\"Namespace\");\nvar username = env.get(\"Username\");\nvar password = env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
+      "libs": [],
+      "x": 560,
+      "y": 1560,
+      "wires": [
+          [
+              "635a4e91f3216913"
+          ]
+      ]
+  },
+  {
+      "id": "fee5830a3b46be36",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "Output",
+      "links": [
+          "635a4e91f3216913",
+          "0852d2d39e503a0d",
+          "a55d7cfc6a6d12f0",
+          "1889a29d67130187",
+          "02e8469947ac3ffa"
+      ],
+      "x": 765,
+      "y": 200,
+      "wires": [
+          []
+      ]
+  },
+  {
+      "id": "635a4e91f3216913",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "DELETE Output",
+      "mode": "link",
+      "links": [
+          "fee5830a3b46be36"
+      ],
+      "x": 755,
+      "y": 1560,
+      "wires": []
+  },
+  {
+      "id": "4f6e63908178d6f6",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "Catch if not JSON Object",
+      "scope": [
+          "9d3b573464d774cf"
+      ],
+      "uncaught": false,
+      "x": 130,
+      "y": 1320,
+      "wires": [
+          [
+              "db139198fc06031a"
+          ]
+      ]
+  },
+  {
+      "id": "db139198fc06031a",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "parameterizeSQL",
+      "func": "\n//Zieht die primitiven Daten aus dem SQL Statement und ersetzt\n//diese mit einem ? zur parametisierung.\n//Gibt ein JSON Objekt zurück mit Feld:\n// - sql: beinhaltet das angepasste SQL Statement\n// - values: behinhaltet die tatsächlichen daten\n\n//var data = \"select * from pers.MyData where Name = 'Peter' AND Age = 17 GROUP BY Name HAVING ID > 71 ORDER BY Age DESC\";\nvar a = msg.data.split(\" \");\nvar sql = \"\";\nvar values = [];\nfor (i = 0; i < a.length; i++) {\n    if (parseToPrimitive(a[i]) == null)\n        sql += a[i] + \" \";\n    else{\n        sql += \"? \";\n        values.push(parseToPrimitive(a[i]));\n    }\n    \n}\n\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\nreturn msg;\n\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 370,
+      "y": 1320,
+      "wires": [
+          [
+              "9d3b573464d774cf"
+          ]
+      ],
+      "inputLabels": [
+          "from \"CAtch if not JSON Object\""
+      ],
+      "outputLabels": [
+          "to \"Make JSON Object\""
+      ]
+  },
+  {
+      "id": "9d3b573464d774cf",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": true,
+      "x": 310,
+      "y": 1380,
+      "wires": [
+          [
+              "6a51f7d7e878eefc"
+          ]
+      ]
+  },
+  {
+      "id": "6a51f7d7e878eefc",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "execute update sql on msg/PERF",
+      "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"UPDATE\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Update Statement found!\";\n}\n\n\nconst iris = flow.get(\"iris\");\nconst namespace = flow.get(\"namespace\");\n\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\ntry{\n    //Create value string list\n    values = createValuesString(msg.data[\"values\"]);\n    //Insert\n    result = exInsert(msg.data[\"sql\"], values);\n}\ncatch(e){\n    msg.error = \"Could not Update:\\n\" + e;\n    result = 0;\n}\n\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        if(arr[i] == true){\n            arr[i] = 1\n        }\n        if(arr[i] == false){\n            arr[i] = 0\n        }\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\n// Code added here will be run once\n// whenever the node is started.\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =  env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace =  env.get(\"Namespace\");\nvar username = env.get(\"Username\");\nvar password = env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
+      "libs": [],
+      "x": 560,
+      "y": 1380,
+      "wires": [
+          [
+              "0852d2d39e503a0d"
+          ]
+      ]
+  },
+  {
+      "id": "0852d2d39e503a0d",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "UPDATE Output",
+      "mode": "link",
+      "links": [
+          "fee5830a3b46be36"
+      ],
+      "x": 755,
+      "y": 1380,
+      "wires": []
+  },
+  {
+      "id": "58a422d9691a81a5",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "Catch if not JSON Object",
+      "scope": [
+          "9f5e324c52bbc4c9"
+      ],
+      "uncaught": false,
+      "x": 130,
+      "y": 1120,
+      "wires": [
+          [
+              "04202b76f08bf8dd"
+          ]
+      ]
+  },
+  {
+      "id": "04202b76f08bf8dd",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "parameterizeInsertSQL",
+      "func": "\nvar a = msg.data.split(\" \");\nvar i = 0;\nvar sql = \"\";\n\n//Get sql Statement until values part\nfor(i in a){\n    sql += a[i] + \" \";\n    if(a[i].toUpperCase() == \"VALUES\"){\n        i++;\n        break;\n    }\n    \n}\n\n//Get values part\nvar valueStmt = \"\";\nfor(var j = i; j < a.length;j++){\n    valueStmt += a[j];\n}\n//Remove Brackets\nvalueStmt = valueStmt.substring(1,valueStmt.length -1);\n//Split in array of values\nvar values = valueStmt.split(\",\");\n\n//Extend sql Staemnt with questions marks\n//and parse values to their primitives\nsql+= \"(\";\nfor(j in values){\n    if(j == values.length -1){\n        sql += \"?)\";\n    }\n    else{\n        sql += \"?,\";\n    }\n    values[j] = parseToPrimitive(values[j]);\n}\n\n//Make JSON object\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\n\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Parse the given sql string value to the primitive\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 390,
+      "y": 1120,
+      "wires": [
+          [
+              "9f5e324c52bbc4c9"
+          ]
+      ]
+  },
+  {
+      "id": "9f5e324c52bbc4c9",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": true,
+      "x": 310,
+      "y": 1200,
+      "wires": [
+          [
+              "9f94ed449077fb7e"
+          ]
+      ]
+  },
+  {
+      "id": "9f94ed449077fb7e",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "execute insert sql on msg/PERF",
+      "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"INSERT\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Insert Statement found!\";\n}\n\nconst namespace = flow.get(\"namespace\")\nconst iris = flow.get(\"iris\");\nif(msg.hasOwnProperty(\"createClass\")){\n\n    //Check if Class exists   \n    var className = getClassName(msg.data[\"sql\"]);\n    var classExists = iris.classMethodValue(\"Node.IRISInterface\",\n                                                \"CheckIfClassExists\",\n                                                namespace,\n                                                className);\n    if(classExists == 0){\n        //Get Fields of Class from SQL Statement\n        var fields = getFieldsOfClass(msg.data);\n        //Get PAckage and Classname\n        var pkg = className.split(\".\")[0];\n        var arr = className.split(\".\");\n        className = \"\";\n        for(var k = 1; k < arr.length; k++){\n            className += arr[k];\n        }\n        \n        try{\n        //Create the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CreateClass\",\n                                            namespace,\n                                            pkg,\n                                            className,\n                                            fields[\"names\"],\n                                            fields[\"types\"],\n                                            );\n        }\n        catch(e){\n            msg.error = \"Could not create Class:\\n\" + e;\n            msg.result = 0;\n            return msg;\n        }\n        \n        try{\n        //Compile the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CompileClass\",\n                                            namespace,\n                                            pkg,\n                                            className);\n        }\n        catch(e){\n            msg.error = \"Could not compile Class:\\n\" + e;\n            msg.result = 0;\n            return msg;\n            \n        }\n        \n    }\n}\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\nif(Array.isArray(msg.data[\"values\"][0])){\n    //Insert multiple rows\n    for(var i in msg.data[\"values\"]){\n        try{\n            //Create value string list\n            values = createValuesString(msg.data[\"values\"][i]);\n            //Insert\n            exInsert(msg.data[\"sql\"], values);\n        }\n        catch(e){\n            msg.error += \"Could not Insert at (\"+i+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n            result = 0\n        }\n    }\n}\nelse{\n    //Insert one row\n    try{\n        //Create value string list\n        values = createValuesString(msg.data[\"values\"]);\n        //Insert\n        result = exInsert(msg.data[\"sql\"], values);\n    }\n    catch(e){\n        msg.error = \"Could not Insert:\\n\" + e;\n        result = 0;\n    }\n}\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        if(arr[i] == true){\n            arr[i] = 1\n        }\n        if(arr[i] == false){\n            arr[i] = 0\n        }\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n//Extracts the classname from the sql Statement\nfunction getClassName(sql){\n    var arr = sql.split(\" \");\n    for (var i = 0; i < arr.length; i++){\n        if(arr[i].toUpperCase() == \"INTO\"){\n            return arr[i + 1];\n        }\n    }\n    return undefined;\n}\n\n//Extracts the Field names of a SQL-Insert Statement\nfunction getFieldsOfClass(data){\n    var fieldnames = data[\"sql\"].split(\"(\")[1]\n                                .split(\")\")[0]\n                                .replaceAll(\" \", \"\");\n    var types = \"\";\n    var values = data[\"values\"];\n    if(Array.isArray(data[\"values\"][0])){\n        values = data[\"values\"][0];\n    }\n    for(var i = 0; i < values.length; i++){\n        types += getType(values[i]);\n        if(i != values.length -1){\n            types += \",\";\n        }\n    }\n    return {\"names\": fieldnames, \"types\": types};\n}\n\n//Get the Objectscript type of the value\n//Works with %String, %Integer, %Double and %Boolean\nfunction getType(value){\n    var type = typeof value;\n    if(type == \"boolean\"){\n        return \"%Boolean\";\n    }\n    if(type == \"number\"){\n        if(String(value).includes(\".\")){\n            return \"%Double\";\n        }\n        return \"%Integer\";\n    }\n    return \"%String\";\n}\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nif(!flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n}",
+      "libs": [],
+      "x": 550,
+      "y": 1200,
+      "wires": [
+          [
+              "a55d7cfc6a6d12f0"
+          ]
+      ]
+  },
+  {
+      "id": "a55d7cfc6a6d12f0",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "INSERT Output",
+      "mode": "link",
+      "links": [
+          "fee5830a3b46be36"
+      ],
+      "x": 735,
+      "y": 1200,
+      "wires": []
+  },
+  {
+      "id": "4cb3178cb441361c",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "Catch if not JSON Object",
+      "scope": [
+          "a96e9eac3ba33022"
+      ],
+      "uncaught": false,
+      "x": 130,
+      "y": 920,
+      "wires": [
+          [
+              "0c4ea12bc6dc8ecc"
+          ]
+      ]
+  },
+  {
+      "id": "0c4ea12bc6dc8ecc",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "parameterizeSQL",
+      "func": "\n//Zieht die primitiven Daten aus dem SQL Statement und ersetzt\n//diese mit einem ? zur parametisierung.\n//Gibt ein JSON Objekt zurück mit Feld:\n// - sql: beinhaltet das angepasste SQL Statement\n// - values: behinhaltet die tatsächlichen daten\n\n//var data = \"select * from pers.MyData where Name = 'Peter' AND Age = 17 GROUP BY Name HAVING ID > 71 ORDER BY Age DESC\";\nvar a = msg.data.split(\" \");\nvar sql = \"\";\nvar values = [];\nfor (i = 0; i < a.length; i++) {\n    if (parseToPrimitive(a[i]) == null)\n        sql += a[i] + \" \";\n    else{\n        sql += \"? \";\n        values.push(parseToPrimitive(a[i]));\n    }\n    \n}\n\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\ndelete msg.error;\nreturn msg;\n\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 370,
+      "y": 920,
+      "wires": [
+          [
+              "a96e9eac3ba33022"
+          ]
+      ],
+      "inputLabels": [
+          "from \"CAtch if not JSON Object\""
+      ],
+      "outputLabels": [
+          "to \"Make JSON Object\""
+      ]
+  },
+  {
+      "id": "a96e9eac3ba33022",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": true,
+      "x": 310,
+      "y": 980,
+      "wires": [
+          [
+              "ee9c0f02de6c79c8"
+          ]
+      ]
+  },
+  {
+      "id": "ee9c0f02de6c79c8",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "execute select sql on msg/PERF",
+      "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"SELECT\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Select Statement found!\";\n}\n\nconst iris = flow.get(\"iris\");\nconst namespace = flow.get(\"namespace\");\n//Make String List of values\nvar values = \"\";\nfor(var i in msg.data[\"values\"]){\n    values += msg.data[\"values\"][i] + \",\";\n}\nvalues = values.substring(0, values.length -1);\n\n//Call ObjectScript Method\nvar result = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"ExecArray\",\n                                            msg.data[\"sql\"], \n                                            values, \n                                            namespace);\n\n\nif(result == undefined){\n    result = 0;\n}\n/*\nlet a = [];\nfor(var j  = 1; j <= result.count(); j++){\n    a.push(result.get(j));\n}*/\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method\n/*\nfunction execute(sql, values){\n    var r = iris.classMethodIRISList(\"Node.IRISInterface\",\n                                            \"ExecLong\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}*/\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =  env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace =  env.get(\"Namespace\");\nvar username = env.get(\"Username\");\nvar password = env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
+      "libs": [],
+      "x": 550,
+      "y": 980,
+      "wires": [
+          [
+              "aeb69e9482106404"
+          ]
+      ]
+  },
+  {
+      "id": "aeb69e9482106404",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "result",
+      "action": "obj",
+      "pretty": true,
+      "x": 790,
+      "y": 980,
+      "wires": [
+          [
+              "55f72b048a2771ad"
+          ]
+      ]
+  },
+  {
+      "id": "ce6a3f21384edd93",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "",
+      "scope": [
+          "aeb69e9482106404"
+      ],
+      "uncaught": false,
+      "x": 830,
+      "y": 940,
+      "wires": [
+          [
+              "1889a29d67130187"
+          ]
+      ]
+  },
+  {
+      "id": "1889a29d67130187",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "SELECT Output",
+      "mode": "link",
+      "links": [
+          "fee5830a3b46be36"
+      ],
+      "x": 1095,
+      "y": 960,
+      "wires": []
+  },
+  {
+      "id": "59d10df842265285",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "SELECT",
+      "info": "",
+      "x": 80,
+      "y": 880,
+      "wires": []
+  },
+  {
+      "id": "33a6d214bb97c060",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "INSERT",
+      "info": "",
+      "x": 80,
+      "y": 1080,
+      "wires": []
+  },
+  {
+      "id": "4f1292f46f9ae592",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "UPDATE",
+      "info": "",
+      "x": 80,
+      "y": 1280,
+      "wires": []
+  },
+  {
+      "id": "44edd78ea580ef64",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "DELETE",
+      "info": "",
+      "x": 80,
+      "y": 1460,
+      "wires": []
+  },
+  {
+      "id": "5a50759e4d395b74",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "DDL Out",
+      "mode": "link",
+      "links": [
+          "cae71390a21ea863"
+      ],
+      "x": 655,
+      "y": 300,
+      "wires": []
+  },
+  {
+      "id": "d685f22b7a719b42",
+      "type": "catch",
+      "z": "node-red-iris-IRIS",
+      "name": "Catch if not JSON Object",
+      "scope": [
+          "d51bc444fde77cf1"
+      ],
+      "uncaught": false,
+      "x": 130,
+      "y": 1680,
+      "wires": [
+          [
+              "2a7fa852d325e81f"
+          ]
+      ]
+  },
+  {
+      "id": "2a7fa852d325e81f",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "parameterizeSQL",
+      "func": "\n//Zieht die primitiven Daten aus dem SQL Statement und ersetzt\n//diese mit einem ? zur parametisierung.\n//Gibt ein JSON Objekt zurück mit Feld:\n// - sql: beinhaltet das angepasste SQL Statement\n// - values: behinhaltet die tatsächlichen daten\n\n//var data = \"select * from pers.MyData where Name = 'Peter' AND Age = 17 GROUP BY Name HAVING ID > 71 ORDER BY Age DESC\";\nvar a = msg.data.split(\" \");\nvar sql = \"\";\nvar values = [];\nfor (i = 0; i < a.length; i++) {\n    if (parseToPrimitive(a[i]) == null)\n        sql += a[i] + \" \";\n    else{\n        sql += \"? \";\n        values.push(parseToPrimitive(a[i]));\n    }\n    \n}\n\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\nreturn msg;\n\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 370,
+      "y": 1680,
+      "wires": [
+          [
+              "d51bc444fde77cf1"
+          ]
+      ],
+      "inputLabels": [
+          "from \"CAtch if not JSON Object\""
+      ],
+      "outputLabels": [
+          "to \"Make JSON Object\""
+      ]
+  },
+  {
+      "id": "d51bc444fde77cf1",
+      "type": "json",
+      "z": "node-red-iris-IRIS",
+      "name": "Make JSON Object",
+      "property": "data",
+      "action": "obj",
+      "pretty": true,
+      "x": 310,
+      "y": 1740,
+      "wires": [
+          [
+              "7353faa435e3e5cd"
+          ]
+      ]
+  },
+  {
+      "id": "7353faa435e3e5cd",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "execute delete sql on msg/PERF",
+      "func": "msg.test = 1\nif(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(msg.data[\"sql\"] == undefined){\n        throw \"No Statement found!\";\n}\n\n\nconst iris = flow.get(\"iris\");\nconst namespace = flow.get(\"namespace\");\n\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\ntry{\n    //Create value string list\n    values = createValuesString(msg.data[\"values\"]);\n    //Insert\n    result = exInsert(msg.data[\"sql\"], values);\n}\ncatch(e){\n    msg.error = \"Could not Delete:\\n\" + e;\n    result = 0;\n}\n\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "// Code added here will be run once\n// whenever the node is started.\n// Code added here will be run once\n// whenever the node is started.\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =  env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace =  env.get(\"Namespace\");\nvar username = env.get(\"Username\");\nvar password = env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+      "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
+      "libs": [],
+      "x": 560,
+      "y": 1740,
+      "wires": [
+          [
+              "02e8469947ac3ffa"
+          ]
+      ]
+  },
+  {
+      "id": "02e8469947ac3ffa",
+      "type": "link out",
+      "z": "node-red-iris-IRIS",
+      "name": "DDL Output",
+      "mode": "link",
+      "links": [
+          "fee5830a3b46be36"
+      ],
+      "x": 745,
+      "y": 1740,
+      "wires": []
+  },
+  {
+      "id": "cae71390a21ea863",
+      "type": "link in",
+      "z": "node-red-iris-IRIS",
+      "name": "DDL in",
+      "links": [
+          "5a50759e4d395b74"
+      ],
+      "x": 145,
+      "y": 1740,
+      "wires": [
+          [
+              "d51bc444fde77cf1"
+          ]
+      ]
+  },
+  {
+      "id": "9f64eb203b0fd5be",
+      "type": "comment",
+      "z": "node-red-iris-IRIS",
+      "name": "DDL",
+      "info": "",
+      "x": 70,
+      "y": 1640,
+      "wires": []
+  },
+  {
+      "id": "55f72b048a2771ad",
+      "type": "function",
+      "z": "node-red-iris-IRIS",
+      "name": "",
+      "func": "let table = msg.result;\nlet colNames = table.splice(0,1)\ncolNames = colNames[0]\nmsg.result = []\nfor(let i in table){\n    let json = {}\n    let value = table[i]\n    for(let j in colNames){\n        json[colNames[j]] = value[j]\n    }\n    msg.result.push(json)\n}\nreturn msg;",
+      "outputs": 1,
+      "noerr": 0,
+      "initialize": "",
+      "finalize": "",
+      "libs": [],
+      "x": 960,
+      "y": 980,
+      "wires": [
+          [
+              "1889a29d67130187"
+          ]
+      ]
+  }
+]
+}

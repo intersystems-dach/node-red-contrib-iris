@@ -1,0 +1,34 @@
+{
+  "name": "node-red-iris",
+  "version": "0.0.3",
+  "description": "Access to Intersystems IRIS Data Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node-red",
+    "nodered",
+    "Intersystems",
+    "IRIS",
+    "Database"
+  ],
+  "author": "Philipp Bonin",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "bugs": {
+    "email": "Philipp.Bonin@intersystems.com"
+  },
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "IRIS": "nodes/iris_wrapper.js",
+      "IRIS_CREATE": "nodes/iris_create_wrapper.js",
+      "IRIS_DELETE_CLASS": "nodes/iris_deleteClass_wrapper.js",
+      "IRIS_INSERT": "nodes/iris_insert_wrapper.js",
+      "IRIS_OO": "nodes/iris_oo_wrapper.js"
+    }
+  }
+}

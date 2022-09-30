@@ -1,0 +1,851 @@
+{
+    "id": "node-red-iris-IRIS-INSERT",
+    "type": "subflow",
+    "name": "IRIS_INSERT",
+    "info": "<p>Inserts data into the IRIS Database.</p>\n\n<details>\n    <summary>Required</summary>\n    <p>\n        <ul>\n            <li><a href=\"https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native\">Native API</a> installed in Node-Red.</li>\n            <li><b>Node.IRISInterface</b> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Import Native API</summary>\n    <p>\n        In <code>.node-red\\settings.js</code> add Module in <code>functionGlobalContext</code>!\n        \n<pre>\nfunctionGlobalContext: {\n    iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')\n}\n</pre>\n</p>\n</details>\n\n<details>  \n    <summary>Connect to IRIS</summary>\n    <p>\n        Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.\n    </p>\n</details>\n\n<details>\n    <summary>Hold Connection</summary>\n    <p>\n        The connection will be hold as long as specified in the property, when no new messages arrives.\n    </p>\n</details>\n\n<details>\n    <summary>Check Connection</summary>\n    <p>\n        If enabled the node will check every 3 seconds if a connection is established and will show the status.\n    </p>\n</details>\n\n<details>\n    <summary>Connection Status</summary>\n    <p>\n        <ul>\n            <li><font color = \"red\">Not Connected</font>: No Connection established, because could not connect or disconnected manually.</li>\n            <li><font color = \"yellow\">On Hold</font>: The connection is not established, but will build a connection as soon as a message arrives.</li>\n            <li><font color = \"green\">Connected</font>: Connected to IRIS.</li>\n        </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Insert Data via JSON</summary>\n    <p>\n        Pass a JSON-Object in the <code>msg.data</code> with a field <b>\"sql\"</b> and an array field <b>\"values\"</b> with the objects you want to insert. \n        Example:\n<pre>\nmsg.data = {\n    \"sql\": \"INSERT INTO pkg.ClassName (Name, Age) Values (?, ?)\",\n    \"values\":[\n        \"Max\",\n        42\n        ]\n}\n</pre>\nOr with an array of arrays:\n<pre>\nmsg.data = {\n    \"sql\": \"INSERT INTO pkg.ClassName (Name, Age) Values (?, ?)\",\n    \"values\":[\n            [\n                \"Max\",\n                42\n            ],\n            [\n                \"Moritz\",\n                66\n            ]\n        ]\n}\n</pre>\n    </p>\n</details>\n\n<details>\n    <summary>Insert via SQL Statement</summary>\n    <p>\n        Pass the SQL Statement as String in the <code>msg.data</code> field and the Node will parameterize the Statement itself.\n    </p>\n</details>\n\n<details>\n    <summary>Create Class</summary>\n    <p>\n        If enabled and the class does not already exists in IRIS, the node will create the class based on the SQL Statement. Only works with String, Integer, Double and Boolean. Every other datatype will be a String Property in the class.\n    </p>\n</details>\n\n<details>\n    <summary>Set Properties during runtime</summary>\n    <p>\n        <ul>\n            <li>Close connection during runtime with <code>msg.connect</code> set to <code>false</code> or <code>0</code>.</li>\n            <li>Reconnect during runtime with <code>msg.connect</code> set to <code>true</code> or <code>1</code>.</li>\n            <li>Set the namespace during runtime with <code>msg.namespace</code>.</li>\n            <li>To request the current namespace via runtime define a field <code>msg.getNamespace</code>.The current namespace will be written in this field.</li>\n         </ul>\n    </p>\n</details>\n\n<details>\n    <summary>Exceptions</summary>\n    <p>\n        <ul>\n            <li>Throws an Error if <code>msg.data</code> is not correct or could not connect to IRIS.</li>\n            <li>Throws an Error if the SQL-Statement does not start with <i>Insert</i>.</li>\n            <li>Writes <code>1</code> into <code>msg.result</code>, when insert was successful. Writes <code>0</code> when it was unsuccesful, with the error message in <code>msg.error</code>.</li>\n        </ul>\n    </p>\n</details>\n<font size=-2>\n<br>\n<br>\nby Philipp B.\n<br>\nPowered by <a href= \"https://www.intersystems.com/\" style=\"color: #00b4ae\">InterSystems</a>.\n</font>\n<style>\ndetails > summary {\n  cursor: pointer;\n  font-size:20px;\n  background: #eee;\n  margin-bottom: 1rem;\n  padding: 0.5rem 1rem;\n}\n</style>",
+    "category": "IRIS",
+    "in": [
+        {
+            "x": 40,
+            "y": 100,
+            "wires": [
+                {
+                    "id": "a7b2e04212c7542a"
+                },
+                {
+                    "id": "7372cf5879f26f5b"
+                },
+                {
+                    "id": "09d507e6f988845f"
+                },
+                {
+                    "id": "829e55d167e13897"
+                }
+            ]
+        }
+    ],
+    "out": [
+        {
+            "x": 990,
+            "y": 160,
+            "wires": [
+                {
+                    "id": "2c4705f56263598d",
+                    "port": 0
+                },
+                {
+                    "id": "33ddda276d10d864",
+                    "port": 0
+                }
+            ]
+        }
+    ],
+    "env": [
+        {
+            "name": "IP",
+            "type": "str",
+            "value": "localhost",
+            "ui": {
+                "icon": "font-awesome/fa-address-book",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Port",
+            "type": "num",
+            "value": "1972",
+            "ui": {
+                "icon": "font-awesome/fa-hashtag",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Namespace",
+            "type": "str",
+            "value": "TRAINING",
+            "ui": {
+                "icon": "font-awesome/fa-database",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Username",
+            "type": "str",
+            "value": "_SYSTEM",
+            "ui": {
+                "icon": "font-awesome/fa-male",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Password",
+            "type": "str",
+            "value": "sys",
+            "ui": {
+                "icon": "font-awesome/fa-ellipsis-h",
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "str",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "holdConnection",
+            "type": "num",
+            "value": "10",
+            "ui": {
+                "icon": "font-awesome/fa-clock-o",
+                "label": {
+                    "en-US": "Hold Connection (seconds)"
+                },
+                "type": "input",
+                "opts": {
+                    "types": [
+                        "num",
+                        "env"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Check Connection",
+            "type": "bool",
+            "value": "true",
+            "ui": {
+                "icon": "font-awesome/fa-adjust",
+                "type": "checkbox"
+            }
+        },
+        {
+            "name": "Create Class",
+            "type": "bool",
+            "value": "false",
+            "ui": {
+                "icon": "font-awesome/fa-crop",
+                "type": "checkbox"
+            }
+        }
+    ],
+    "meta": {
+        "module": "IRIS_Insert",
+        "version": "0.0.6",
+        "author": "Philipp B.",
+        "keywords": "IRIS,InterSystems,Database"
+    },
+    "color": "#3FADB5",
+    "inputLabels": [
+        "Input"
+    ],
+    "outputLabels": [
+        "Status"
+    ],
+    "icon": "icons/InterSystems.svg",
+        "status": {
+        "x": 860,
+        "y": 740,
+        "wires": [
+            {
+                "id": "1d2a17aaadc3178a",
+                "port": 0
+            },
+            {
+                "id": "7d1c7944d98eff31",
+                "port": 0
+            }
+        ]
+    },
+"flow":[
+    {
+        "id": "a6c0ecd86ca42ddb",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "Set Connection Properties",
+        "rules": [
+            {
+                "t": "set",
+                "p": "conn.IP",
+                "pt": "msg",
+                "to": "IP",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "conn.Port",
+                "pt": "msg",
+                "to": "Port",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "conn.Namespace",
+                "pt": "msg",
+                "to": "Namespace",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "conn.Username",
+                "pt": "msg",
+                "to": "Username",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "conn.Password",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 150,
+        "y": 1140,
+        "wires": [
+            [
+                "7469a7b7420f0106"
+            ]
+        ]
+    },
+    {
+        "id": "f0784f16ed1ccdf5",
+        "type": "json",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Make JSON Object",
+        "property": "data",
+        "action": "obj",
+        "pretty": true,
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "2c4705f56263598d"
+            ]
+        ]
+    },
+    {
+        "id": "ac0373040c7e9eae",
+        "type": "inject",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "check Connection",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 740,
+        "wires": [
+            [
+                "d46c27cd599840de"
+            ]
+        ]
+    },
+    {
+        "id": "6d4bfc64e5a271be",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "Set Connection Properties",
+        "rules": [
+            {
+                "t": "set",
+                "p": "IP",
+                "pt": "msg",
+                "to": "IP",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "Port",
+                "pt": "msg",
+                "to": "Port",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "Namespace",
+                "pt": "msg",
+                "to": "Namespace",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "Username",
+                "pt": "msg",
+                "to": "Username",
+                "tot": "env"
+            },
+            {
+                "t": "set",
+                "p": "Password",
+                "pt": "msg",
+                "to": "Password",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 150,
+        "y": 900,
+        "wires": [
+            [
+                "7d1c7944d98eff31"
+            ]
+        ]
+    },
+    {
+        "id": "a01bdd8c3db0422a",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Show Connection Status",
+        "info": "",
+        "x": 150,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "440aebf591b53b49",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Do the Action",
+        "info": "",
+        "x": 90,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "d46c27cd599840de",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "ifCheckConnection",
+        "property": "Check Connection",
+        "propertyType": "env",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 330,
+        "y": 740,
+        "wires": [
+            [
+                "1d2a17aaadc3178a"
+            ]
+        ]
+    },
+    {
+        "id": "8a5a0172817599be",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "parameterizeInsertSQL",
+        "func": "\nvar a = msg.data.split(\" \");\nvar i = 0;\nvar sql = \"\";\n\n//Get sql Statement until values part\nfor(i in a){\n    sql += a[i] + \" \";\n    if(a[i].toUpperCase() == \"VALUES\"){\n        i++;\n        break;\n    }\n    \n}\n\n//Get values part\nvar valueStmt = \"\";\nfor(var j = i; j < a.length;j++){\n    valueStmt += a[j];\n}\n//Remove Brackets\nvalueStmt = valueStmt.substring(1,valueStmt.length -1);\n//Split in array of values\nvar values = valueStmt.split(\",\");\n\n//Extend sql Staemnt with questions marks\n//and parse values to their primitives\nsql+= \"(\";\nfor(j in values){\n    if(j == values.length -1){\n        sql += \"?)\";\n    }\n    else{\n        sql += \"?,\";\n    }\n    values[j] = parseToPrimitive(values[j]);\n}\n\n//Make JSON object\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\n\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Parse the given sql string value to the primitive\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 40,
+        "wires": [
+            [
+                "f0784f16ed1ccdf5"
+            ]
+        ]
+    },
+    {
+        "id": "fe3ebb5fe4f567c0",
+        "type": "catch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Catch if not JSON Object",
+        "scope": [
+            "f0784f16ed1ccdf5"
+        ],
+        "uncaught": false,
+        "x": 290,
+        "y": 40,
+        "wires": [
+            [
+                "8a5a0172817599be"
+            ]
+        ]
+    },
+    {
+        "id": "1d2a17aaadc3178a",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "checkConnection/PERF",
+        "func": "var conn = flow.get(\"conn\");\nif(conn.isClosed()){\n    var onHold = flow.get(\"onHold\")||false;\n    if(!onHold){\n        msg.payload = ({fill: \"red\",text:\"Not Connected\"});\n    }\n    else{\n        msg.payload = ({fill:\"yellow\",text:\"On Hold\"});\n    }\n}\nelse{\n    msg.payload = ({fill: \"green\",text:\"Connected\"});\n    flow.set(\"onHold\",-1);\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7469a7b7420f0106",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "execute insert sql on msg",
+        "func": "\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"INSERT\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Insert Statement found!\";\n}\n\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip = msg.conn.IP;\nvar port = msg.conn.Port;\nvar namespace = msg.conn.Namespace;\nvar username = msg.conn.Username;\nvar password = msg.conn.Password;\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\n\nif(env.get(\"Create Class\")){\n\n    //Check if Class exists   \n    var className = getClassName(msg.data[\"sql\"]);\n    var classExists = iris.classMethodValue(\"Node.IRISInterface\",\n                                                \"CheckIfClassExists\",\n                                                msg.conn.Namespace,\n                                                className);\n    if(classExists == 0){\n        //Get Fields of Class from SQL Statement\n        var fields = getFieldsOfClass(msg.data);\n        //Get PAckage and Classname\n        var pkg = className.split(\".\")[0];\n        var arr = className.split(\".\");\n        className = \"\";\n        for(var k = 1; k < arr.length; k++){\n            className += arr[k];\n        }\n        \n        try{\n        //Create the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CreateClass\",\n                                            msg.conn.Namespace,\n                                            pkg,\n                                            className,\n                                            fields[\"names\"],\n                                            fields[\"types\"],\n                                            );\n        }\n        catch(e){\n            msg.error = \"Could not create Class:\\n\" + e;\n            msg.result = 0;\n            connection.close();\n            return msg;\n        }\n        \n        try{\n        //Compile the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CompileClass\",\n                                            msg.conn.Namespace,\n                                            pkg,\n                                            className);\n        }\n        catch(e){\n            msg.error = \"Could not compile Class:\\n\" + e;\n            msg.result = 0;\n            connection.close();\n            return msg;\n            \n        }\n        \n    }\n}\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\nif(Array.isArray(msg.data[\"values\"][0])){\n    //Insert multiple rows\n    for(var i in msg.data[\"values\"]){\n        try{\n            //Create value string list\n            values = createValuesString(msg.data[\"values\"][i]);\n            //Insert\n            exInsert(msg.data[\"sql\"], values);\n        }\n        catch(e){\n            msg.error += \"Could not Insert at (\"+i+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n            result = 0\n        }\n    }\n}\nelse{\n    //Insert one row\n    try{\n        //Create value string list\n        values = createValuesString(msg.data[\"values\"]);\n        //Insert\n        result = exInsert(msg.data[\"sql\"], values);\n    }\n    catch(e){\n        msg.error = \"Could not Insert:\\n\" + e;\n        result = 0;\n    }\n}\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\n//Close connection\nconnection.close();\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            msg.conn.Namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n//Extracts the classname from the sql Statement\nfunction getClassName(sql){\n    var arr = sql.split(\" \");\n    for (var i = 0; i < arr.length; i++){\n        if(arr[i].toUpperCase() == \"INTO\"){\n            return arr[i + 1];\n        }\n    }\n    return undefined;\n}\n\n//Extracts the Field names of a SQL-Insert Statement\nfunction getFieldsOfClass(data){\n    var fieldnames = data[\"sql\"].split(\"(\")[1]\n                                .split(\")\")[0]\n                                .replaceAll(\" \", \"\");\n    var types = \"\";\n    var values = data[\"values\"];\n    if(Array.isArray(data[\"values\"][0])){\n        values = data[\"values\"][0];\n    }\n    for(var i = 0; i < values.length; i++){\n        types += getType(values[i]);\n        if(i != values.length -1){\n            types += \",\";\n        }\n    }\n    return {\"names\": fieldnames, \"types\": types};\n}\n\n//Get the Objectscript type of the value\n//Works with %String, %Integer, %Double and %Boolean\nfunction getType(value){\n    var type = typeof value;\n    if(type == \"boolean\"){\n        return \"%Boolean\";\n    }\n    if(type == \"number\"){\n        if(String(value).includes(\".\")){\n            return \"%Double\";\n        }\n        return \"%Integer\";\n    }\n    return \"%String\";\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 1140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "77c673927c48a84d",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "execute insert sql onStart,onStop",
+        "func": "\n\nif(!msg.data.hasOwnProperty(\"sql\")){\n    msg.error = \"Could not find sql statement\";\n    msg.result = 0;\n    return msg;\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"INSERT\") ||\n    msg.data[\"sql\"] == undefined){\n        msg.error = \"No Insert Statement found\";\n        msg.result = 0;\n        return msg;\n    }\n//const irisnative = require('intersystems-iris-native')\nconst namespace = context.get(\"namespace\");\nconst iris = context.get(\"iris\");\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\nif(Array.isArray(msg.data[\"values\"][0])){\n    for(var i in msg.data[\"values\"]){\n        try{\n            values = createValuesString(msg.data[\"values\"][i]);\n            exInsert(msg.data[\"sql\"], values);\n            /*iris.classMethodValue(\"Node.IRISInterface\", \n                                                \"exInsert\",\n                                                msg.data[\"sql\"],\n                                                values, \n                                                msg.conn.Namespace);*/\n        }\n        catch(e){\n            msg.error += \"Could not Insert at (\"+i+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n            result = 0\n        }\n    }\n}\nelse{\n    try{\n        values = createValuesString(msg.data[\"values\"]);\n        result = exInsert(msg.data[\"sql\"], values);\n        /*result = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            msg.data[\"sql\"], \n                                            values, \n                                            msg.conn.Namespace);*/\n    }\n    catch(e){\n        msg.error = \"Could not Insert:\\n\" + e;\n        result = 0;\n    }\n}\nif(msg.error == \"\"){\n    delete msg.error;\n}\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nvar irisnative = global.get(\"iris\");\n//import irisnative from 'intersystems-iris-native';\n\nvar ip = env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace =env.get(\"Namespace\");\nvar username = env.get(\"Username\");\nvar password = env.get(\"Password\");\n\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    //msg.error = \"Could not connect to IRIS:\\n\" + e;\n    //return msg;\n    node.log(\"Could not connect to IRIS:\\n\" + e);\n    return;\n}   \n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\ncontext.set(\"conn\",connection);\ncontext.set(\"iris\",iris);\ncontext.set(\"namespace\", namespace);",
+        "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nconst connection = context.get(\"conn\");\nif(connection != undefined){\n    connection.close();\n}",
+        "libs": [],
+        "x": 180,
+        "y": 1080,
+        "wires": [
+            []
+        ],
+        "inputLabels": [
+            "from \"Set Connection Properties\""
+        ],
+        "outputLabels": [
+            "to Node Output"
+        ]
+    },
+    {
+        "id": "7193d4a204844751",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "parameterizeSQL",
+        "func": "\n//Zieht die primitiven Daten aus dem SQL Statement und ersetzt\n//diese mit einem ? zur parametisierung.\n//Gibt ein JSON Objekt zurück mit Feld:\n// - sql: beinhaltet das angepasste SQL Statement\n// - values: behinhaltet die tatsächlichen daten\n\n//var data = \"select * from pers.MyData where Name = 'Peter' AND Age = 17 GROUP BY Name HAVING ID > 71 ORDER BY Age DESC\";\nvar a = msg.data.split(\" \");\nvar sql = \"\";\nvar values = [];\nfor (i = 0; i < a.length; i++) {\n    if (parseToPrimitive(a[i]) == null)\n        sql += a[i] + \" \";\n    else{\n        sql += \"? \";\n        values.push(parseToPrimitive(a[i]));\n    }\n    \n}\n\nmsg.data = {\n    \"sql\": sql,\n    \"values\": values\n};\nreturn msg;\n\nfunction parseToPrimitive(value) {\n    try {\n        var p = JSON.parse(value);\n    }\n    catch (e) {\n        if (value.startsWith(\"'\") && value.startsWith(\"'\", value.length - 1)) {\n            var s = value.replace(\"'\", \"\");\n            s = s.replace(\"'\", \"\");\n            return s;\n        }\n        return null;\n    }\n\n    if (typeof (p) == Boolean) {\n        if (value == \"false\")\n            return false;\n        return true;\n    }\n    return p;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 130,
+        "y": 980,
+        "wires": [
+            []
+        ],
+        "inputLabels": [
+            "from \"CAtch if not JSON Object\""
+        ],
+        "outputLabels": [
+            "to \"Make JSON Object\""
+        ]
+    },
+    {
+        "id": "3b6b3cf9b5b713bb",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Same as \"parameterizeInsertSQL\" but needs whitespaces around primitives",
+        "info": "",
+        "x": 310,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "c701cac48a6ac889",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Same as \"execute insert sql on msg\" but establish the connection on Start and disconnect on Stop",
+        "info": "",
+        "x": 370,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "82a6bd816d1e921a",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Old code",
+        "info": "",
+        "x": 100,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "2c4705f56263598d",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "execute insert sql on msg/PERF",
+        "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"sql\")){\n    throw \"Could not find sql field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"values\")){\n    throw \"Could not find values field!!\";\n}\n\nif(!msg.data[\"sql\"].toUpperCase().startsWith(\"INSERT\") ||\n    msg.data[\"sql\"] == undefined){\n        throw \"No Insert Statement found!\";\n}\n\nconst namespace = flow.get(\"namespace\")\nconst iris = flow.get(\"iris\");\nif(env.get(\"Create Class\")){\n\n    //Check if Class exists   \n    var className = getClassName(msg.data[\"sql\"]);\n    var classExists = iris.classMethodValue(\"Node.IRISInterface\",\n                                                \"CheckIfClassExists\",\n                                                namespace,\n                                                className);\n    if(classExists == 0){\n        //Get Fields of Class from SQL Statement\n        var fields = getFieldsOfClass(msg.data);\n        //Get PAckage and Classname\n        var pkg = className.split(\".\")[0];\n        var arr = className.split(\".\");\n        className = \"\";\n        for(var k = 1; k < arr.length; k++){\n            className += arr[k];\n        }\n        \n        try{\n        //Create the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CreateClass\",\n                                            namespace,\n                                            pkg,\n                                            className,\n                                            fields[\"names\"],\n                                            fields[\"types\"],\n                                            );\n        }\n        catch(e){\n            msg.error = \"Could not create Class:\\n\" + e;\n            msg.result = 0;\n            return msg;\n        }\n        \n        try{\n        //Compile the class\n        iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"CompileClass\",\n                                            namespace,\n                                            pkg,\n                                            className);\n        }\n        catch(e){\n            msg.error = \"Could not compile Class:\\n\" + e;\n            msg.result = 0;\n            return msg;\n            \n        }\n        \n    }\n}\nvar values = \"\";\nvar result = 1;\nmsg.error = \"\";\n\nif(Array.isArray(msg.data[\"values\"][0])){\n    //Insert multiple rows\n    for(var i in msg.data[\"values\"]){\n        try{\n            //Create value string list\n            values = createValuesString(msg.data[\"values\"][i]);\n            //Insert\n            exInsert(msg.data[\"sql\"], values);\n        }\n        catch(e){\n            msg.error += \"Could not Insert at (\"+i+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n            result = 0\n        }\n    }\n}\nelse{\n    //Insert one row\n    try{\n        //Create value string list\n        values = createValuesString(msg.data[\"values\"]);\n        //Insert\n        result = exInsert(msg.data[\"sql\"], values);\n    }\n    catch(e){\n        msg.error = \"Could not Insert:\\n\" + e;\n        result = 0;\n    }\n}\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        if(arr[i] == true){\n            arr[i] = 1\n        }\n        if(arr[i] == false){\n            arr[i] = 0\n        }\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n//Extracts the classname from the sql Statement\nfunction getClassName(sql){\n    var arr = sql.split(\" \");\n    for (var i = 0; i < arr.length; i++){\n        if(arr[i].toUpperCase() == \"INTO\"){\n            return arr[i + 1];\n        }\n    }\n    return undefined;\n}\n\n//Extracts the Field names of a SQL-Insert Statement\nfunction getFieldsOfClass(data){\n    var fieldnames = data[\"sql\"].split(\"(\")[1]\n                                .split(\")\")[0]\n                                .replaceAll(\" \", \"\");\n    var types = \"\";\n    var values = data[\"values\"];\n    if(Array.isArray(data[\"values\"][0])){\n        values = data[\"values\"][0];\n    }\n    for(var i = 0; i < values.length; i++){\n        types += getType(values[i]);\n        if(i != values.length -1){\n            types += \",\";\n        }\n    }\n    return {\"names\": fieldnames, \"types\": types};\n}\n\n//Get the Objectscript type of the value\n//Works with %String, %Integer, %Double and %Boolean\nfunction getType(value){\n    var type = typeof value;\n    if(type == \"boolean\"){\n        return \"%Boolean\";\n    }\n    if(type == \"number\"){\n        if(String(value).includes(\".\")){\n            return \"%Double\";\n        }\n        return \"%Integer\";\n    }\n    return \"%String\";\n}\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+        "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nif(!flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n}",
+        "libs": [],
+        "x": 710,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7d1c7944d98eff31",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "d": true,
+        "name": "checkConnection",
+        "func": "//const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n//import irisnative from 'intersystems-iris-native';\nvar ip = msg.IP;\nvar port = msg.Port;\nvar namespace = msg.Namespace;\nvar username = msg.Username;\nvar password = msg.Password;\n// Create connection to InterSystems IRIS\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    msg.payload = ({fill: \"green\",text:\"Connected\"});\n}\ncatch(e){\n    msg.payload = ({fill: \"red\",text:\"Not Connected\"});\n    msg.error = e;\n    return msg;\n}\nconnection.close();\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7b2e04212c7542a",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "ifMsg.dataIsNotNull",
+        "property": "data",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "f0784f16ed1ccdf5"
+            ],
+            [
+                "62f639a47284ab10"
+            ]
+        ],
+        "outputLabels": [
+            "isNotNull",
+            "isNull"
+        ]
+    },
+    {
+        "id": "7372cf5879f26f5b",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "ifMsg.connectIsNotNull",
+        "property": "connect",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "dc349baddc678883"
+            ]
+        ]
+    },
+    {
+        "id": "dc349baddc678883",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "setConnectionOnRuntime",
+        "func": "flow.set(\"onHold\", false);\n\nif(msg.connect == false||0){\n    if(!flow.get(\"conn\").isClosed()){\n        flow.get(\"conn\").close();\n    }\n}\nelse if(flow.get(\"conn\").isClosed() && (msg.connect == true||1)){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        msg.error = e;\n        return msg;\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "09d507e6f988845f",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "ifMsg.namespaceIsNotNull",
+        "property": "namespace",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 480,
+        "wires": [
+            [
+                "cb3e33b3abc60c90"
+            ]
+        ]
+    },
+    {
+        "id": "cb3e33b3abc60c90",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "setNamespaceOnRuntime",
+        "rules": [
+            {
+                "t": "set",
+                "p": "namespace",
+                "pt": "flow",
+                "to": "namespace",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62f639a47284ab10",
+        "type": "switch",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "ifMsg.getNamespaceIsNotNull",
+        "property": "getNamespace",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 510,
+        "y": 220,
+        "wires": [
+            [
+                "33ddda276d10d864"
+            ]
+        ]
+    },
+    {
+        "id": "33ddda276d10d864",
+        "type": "change",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "setMsg.getNamespace",
+        "rules": [
+            {
+                "t": "set",
+                "p": "getNamespace",
+                "pt": "msg",
+                "to": "namespace",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66d41be6e4ad58d7",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Set Properties during runtime",
+        "info": "",
+        "x": 480,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "302992c55fae82ad",
+        "type": "comment",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "Request Namespace",
+        "info": "",
+        "x": 480,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1364fa6f8a15014d",
+        "type": "trigger",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "holdConnectionTrigger",
+        "op1": "1",
+        "op2": "0",
+        "op1type": "num",
+        "op2type": "num",
+        "duration": "10",
+        "extend": true,
+        "overrideDelay": true,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 540,
+        "y": 600,
+        "wires": [
+            [
+                "75b7435fad82689a"
+            ]
+        ]
+    },
+    {
+        "id": "d506f1c25cce11e0",
+        "type": "inject",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "injectHoldConnection",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "topic": "",
+        "x": 140,
+        "y": 600,
+        "wires": [
+            [
+                "829e55d167e13897"
+            ]
+        ]
+    },
+    {
+        "id": "75b7435fad82689a",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "setOnHold",
+        "func": "if(msg.payload == 0 && !flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n    flow.set(\"onHold\", true);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "829e55d167e13897",
+        "type": "function",
+        "z": "node-red-iris-IRIS-INSERT",
+        "name": "setDelay",
+        "func": "msg.delay = env.get(\"holdConnection\") * 1000;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 600,
+        "wires": [
+            [
+                "1364fa6f8a15014d"
+            ]
+        ]
+    },
+    {
+        "id": "565703c6cffc2524",
+        "type": "subflow:node-red-iris-IRIS-INSERT",
+        "z": "8938c7ebbc5db0a1",
+        "name": "",
+        "x": 750,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    }
+]
+}
