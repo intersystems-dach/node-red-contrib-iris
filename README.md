@@ -2,21 +2,11 @@
 <img src="/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
-    <summary>General</summary>
+    <summary cursor = "pointer">General</summary>
     <p>
        An Interface for Node-Red to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>. 
     </p>
 </details>
-
-<style>
-    details > summary {
-      cursor: pointer;
-      font-size:20px;
-      background: #eee;
-      margin-bottom: 1rem;
-      padding: 0.5rem 1rem;
-    }
-</style>
 
 <details>
     <summary>Required</summary>
