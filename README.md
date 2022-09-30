@@ -1,17 +1,4 @@
 
-<html>
-<head>
-<style>
-details > summary {
-  cursor: pointer;
-  font-size:20px;
-  background: #eee;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-}
-</style>
-</head>
-<body>
 <img src="/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
@@ -83,5 +70,4 @@ functionGlobalContext: {
 <br>
 <br>
 <p >by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
-</body>
-</html>
+
