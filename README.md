@@ -2,7 +2,7 @@
 <img src="/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
-    <summary cursor = "pointer">General</summary>
+    <summary>General</summary>
     <p>
        An Interface for Node-Red to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>. 
     </p>
