@@ -13,7 +13,7 @@
     <p>
         <ul>
             <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> installed in Node-Red.</li>
-            <li><b>Node.IRISInterface</b> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>
+            <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>
         </ul>
     </p>
 </details>
