@@ -1,5 +1,5 @@
 
-<img src="src/IntersystemsLogo.png" width = "200">
+<img src="https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/InterSystemsLogo.png?token=GHSAT0AAAAAABZMMFTG2VNE5B2JNI7SSIK6YZW3HRA" width = "200">
 <h1>node-red-iris</h1>
 <details>
     <summary>General</summary>
@@ -48,7 +48,7 @@ functionGlobalContext: {
     <p>
         Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.
     </p>
-        <img src = "src/NodeProps.png">
+        <img src = "https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/NodeProps.png?token=GHSAT0AAAAAABZMMFTGQQ5FFRQDHCI45GOCYZW3H5A">
 </details>
 
 <details>
@@ -62,7 +62,7 @@ functionGlobalContext: {
             <li><b>IRIS_OO</b>: Can insert a hierarchical JSON-Object.</li>
         </ul>
     </p>
-    <img src = "src/NodesOverview.png">
+    <img src = "https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/NodesOverview.png?token=GHSAT0AAAAAABZMMFTHLPKPY6THXMFS2QS2YZW3IHQ">
 
 <p> See Node description for futher informations.</p>
 </details>
