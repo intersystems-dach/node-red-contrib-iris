@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/InterSystemsLogo.png?token=GHSAT0AAAAAABZMMFTG2VNE5B2JNI7SSIK6YZW3HRA" width = "200">
+<img src="https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
     <summary>General</summary>
