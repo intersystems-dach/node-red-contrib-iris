@@ -1,5 +1,5 @@
 
-<img src="master/src/InterSystemsLogo.png" width = "200">
+<img src="/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
     <summary>General</summary>
