@@ -8,6 +8,16 @@
     </p>
 </details>
 
+<style>
+    details > summary {
+      cursor: pointer;
+      font-size:20px;
+      background: #eee;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+    }
+</style>
+
 <details>
     <summary>Required</summary>
     <p>
@@ -70,13 +80,3 @@ functionGlobalContext: {
 <br>
 <br>
 <p >by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
-
-<style>
-details > summary {
-  cursor: pointer;
-  font-size:20px;
-  background: #eee;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-}
-</style>
