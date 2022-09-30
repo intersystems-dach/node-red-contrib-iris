@@ -48,7 +48,7 @@ functionGlobalContext: {
     <p>
         Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.
     </p>
-        <img src = "https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/NodeProps.png?token=GHSAT0AAAAAABZMMFTGQQ5FFRQDHCI45GOCYZW3H5A">
+        <img src = "/src/NodeProps.png">
 </details>
 
 <details>
@@ -62,7 +62,7 @@ functionGlobalContext: {
             <li><b>IRIS_OO</b>: Can insert a hierarchical JSON-Object.</li>
         </ul>
     </p>
-    <img src = "https://raw.githubusercontent.com/phil1436/node-red-iris/master/src/NodesOverview.png?token=GHSAT0AAAAAABZMMFTHLPKPY6THXMFS2QS2YZW3IHQ">
+    <img src = "/src/NodesOverview.png">
 
 <p> See Node description for futher informations.</p>
 </details>
