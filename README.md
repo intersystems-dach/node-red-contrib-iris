@@ -13,7 +13,7 @@
     <p>
         <ul>
             <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> installed in Node-Red.</li>
-            <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.0) class installed in IRIS and mapped to Namespace     <b>%ALL</b>.</li>
+            <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.0) class installed in Intersystems IRIS and mapped to Namespace     <b>%ALL</b>.</li>
         </ul>
     </p>
 </details>
@@ -21,7 +21,7 @@
 <details>
     <summary><b>Install</b></summary>
     <p>
-       Either use the <i>Node-RED Menu - Manage Palette - Install</i>, or run the following command in your Node-RED user directory - typically <code>~/.node-red</code>
+       Either use the <i>Node-RED Menu - Manage Palette - Install</i>, or run the following command in your Node-Red user directory - typically <code>~/.node-red</code>
 
 ```shell
 npm i node-red-iris
@@ -33,7 +33,7 @@ npm i node-red-iris
 <details>
     <summary><b>Import Native API</b></summary>
     <p>
-        In <code>~/.node-red/settings.js</code> add Module in <code>functionGlobalContext</code>!
+        In <code>~/.node-red/settings.js</code> add module in <code>functionGlobalContext</code>!
         
 <pre>
 functionGlobalContext: {
@@ -54,12 +54,12 @@ functionGlobalContext: {
 <details>  
     <summary><b>Usage</b></summary>
     <p>
-        Pass the SQL Statement as String in the <b>msg.data</b> field and the Nodes will parameterize the Statement itself.
+        Pass the SQL statement as a string in the <b>msg.data</b> field and the nodes will parameterize the statement itself.
     </p>
 <pre>
 msg.data = "SELECT * FROM NodeREd.Person WHERE Age >= 42 AND Name = 'Max' "
 </pre>
-Or parameterize Statement:
+Or parameterize statement:
 <pre>
 msg.data = { 
     "sql": "SELECT * FROM NodeREd.Person WHERE Age >= ? AND Name = ? ",
@@ -72,16 +72,16 @@ msg.data = {
     <summary><b>Nodes</b></summary>
     <p>
         <ul>
-            <li><b>IRIS</b>: A Node for executing SQL-Statements in IRIS.</li>
-            <li><b>IRIS_CREATE</b>: Creates a class in IRIS.</li>
-            <li><b>IRIS_DELETE_CLASS</b>: Deletes a class in IRIS.</li>
+            <li><b>IRIS</b>: A Node for executing SQL-Statements in Intersystems IRIS.</li>
+            <li><b>IRIS_CREATE</b>: Creates a class in Intersystems IRIS.</li>
+            <li><b>IRIS_DELETE_CLASS</b>: Deletes a class in Intersystems IRIS.</li>
             <li><b>IRIS_INSERT</b>: A Node for only SQL-INSERT-Statements. Can also generate the class, if it does not already exists, based on the statement.</li>
             <li><b>IRIS_OO</b>: Can insert a hierarchical JSON-Object.</li>
         </ul>
     </p>
     <img src = "/src/NodesOverview.png">
 
-<p> See Node description for futher informations.</p>
+<p> See Node description for further informations.</p>
 </details>
 
 <br>
