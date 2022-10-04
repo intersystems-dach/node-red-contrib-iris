@@ -2,14 +2,14 @@
 <img src="/src/InterSystemsLogo.png" width = "200">
 <h1>node-red-iris</h1>
 <details>
-    <summary>General</summary>
+    <summary><b>General</b></summary>
     <p>
        An Interface for Node-Red to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>. 
     </p>
 </details>
 
 <details>
-    <summary>Required</summary>
+    <summary><b>Required</b></summary>
     <p>
         <ul>
             <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> installed in Node-Red.</li>
@@ -19,7 +19,7 @@
 </details>
 
 <details>
-    <summary>Install</summary>
+    <summary><b>Install</b></summary>
     <p>
        Either use the <i>Node-RED Menu - Manage Palette - Install</i>, or run the following command in your Node-RED user directory - typically <code>~/.node-red</code>
 
@@ -31,9 +31,9 @@ npm i node-red-iris
 </details>
 
 <details>
-    <summary>Import Native API</summary>
+    <summary><b>Import Native API</b></summary>
     <p>
-        In <code>.node-red\settings.js</code> add Module in <code>functionGlobalContext</code>!
+        In <code>~/.node-red/settings.js</code> add Module in <code>functionGlobalContext</code>!
         
 <pre>
 functionGlobalContext: {
@@ -44,15 +44,32 @@ functionGlobalContext: {
 </details>
 
 <details>  
-    <summary>Connect to IRIS</summary>
+    <summary><b>Connect to IRIS</b></summary>
     <p>
         Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.
     </p>
         <img src = "/src/NodeProps.png">
 </details>
 
+<details>  
+    <summary><b>Usage</b></summary>
+    <p>
+        Pass the SQL Statement as String in the <b>msg.data</b> field and the Nodes will parameterize the Statement itself.
+    </p>
+<pre>
+msg.data = "SELECT * FROM NodeREd.Person WHERE Age >= 42 AND Name = 'Max' "
+</pre>
+Or parameterize Statement:
+<pre>
+msg.data = { 
+    "sql": "SELECT * FROM NodeREd.Person WHERE Age >= ? AND Name = ? ",
+    "values": [42, "Max"]
+}
+</pre>
+</details>
+
 <details>
-    <summary>Nodes</summary>
+    <summary><b>Nodes</b></summary>
     <p>
         <ul>
             <li><b>IRIS</b>: A Node for executing SQL-Statements in IRIS.</li>
