@@ -1,6 +1,6 @@
 
 <img src="/src/InterSystemsLogo.png" width = "200">
-<h1>node-red-iris</h1>
+<h1>node-red-contrib-iris</h1>
 <details>
     <summary><b>General</b></summary>
     <p>
