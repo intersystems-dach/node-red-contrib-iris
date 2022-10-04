@@ -1,6 +1,6 @@
 {
   "name": "node-red-iris",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Access to Intersystems IRIS Data Platform",
   "main": "index.js",
   "scripts": {
