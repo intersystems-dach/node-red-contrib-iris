@@ -4,7 +4,7 @@
 <details>
     <summary><b>General</b></summary>
     <p>
-       An Interface for Node-Red to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>. 
+       An interface for <a href = 'https://nodered.org/'>Node-Red</a> to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>. 
     </p>
 </details>
 
