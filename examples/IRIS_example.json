@@ -1,6 +1,6 @@
 [
     {
-        "id": "5c8dac7018c232ae",
+        "id": "582962ff6e21c7a7",
         "type": "tab",
         "label": "IRIS Example",
         "disabled": false,
@@ -8,9 +8,9 @@
         "env": []
     },
     {
-        "id": "129db924527cac18",
+        "id": "585e042552a6e8cc",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -22,14 +22,14 @@
         "y": 260,
         "wires": [
             [
-                "5abfc97529bd71e4"
+                "4a4dc7d911fe7849"
             ]
         ]
     },
     {
-        "id": "5abfc97529bd71e4",
+        "id": "4a4dc7d911fe7849",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make create Structure",
         "func": "msg .data = {\n    \"package\": \"NodeRed\",\n    \"className\": \"Person\",\n    \"properties\":[\n        {\n            \"name\": \"firstName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"lastName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"age\",\n            \"type\": \"int\"\n        }\n        ,\n        {\n            \"name\": \"isAlive\",\n            \"type\": \"boolean\"\n        }\n    ]\n}\nreturn msg;",
         "outputs": 1,
@@ -41,14 +41,14 @@
         "y": 260,
         "wires": [
             [
-                "91acd2a9be6f9665"
+                "ef913324c0e24797"
             ]
         ]
     },
     {
-        "id": "b3c6fab954268f37",
+        "id": "5c2234a614663d66",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -63,9 +63,9 @@
         "wires": []
     },
     {
-        "id": "d2051fc5d56f8df3",
+        "id": "3ceba0ab8fb1c435",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -86,17 +86,17 @@
         "y": 260,
         "wires": [
             [
-                "814d90fcba6b4806"
+                "4652b49c70cfb52f"
             ],
             [
-                "b3c6fab954268f37"
+                "5c2234a614663d66"
             ]
         ]
     },
     {
-        "id": "99bd77bd5d8ba36f",
+        "id": "26d3a656d607e3e3",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -108,14 +108,14 @@
         "y": 400,
         "wires": [
             [
-                "cc3d362a655c7d3e"
+                "85ca896fe13c7941"
             ]
         ]
     },
     {
-        "id": "cc3d362a655c7d3e",
+        "id": "85ca896fe13c7941",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make Insert Statement",
         "func": "msg.data = \"INSERT INTO NodeRed.Person (firstName, lastName, age, isAlive) VALUES ('Stan', 'Marsch', 10, true)\"\nreturn msg;",
         "outputs": 1,
@@ -127,14 +127,14 @@
         "y": 400,
         "wires": [
             [
-                "6ed2281b9fecf4b7"
+                "b037d7be8fad51c5"
             ]
         ]
     },
     {
-        "id": "757ae73b607250c7",
+        "id": "d91793971b292b7c",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -149,9 +149,9 @@
         "wires": []
     },
     {
-        "id": "91b9b8860533f999",
+        "id": "45394288c5a9a9bc",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -172,18 +172,18 @@
         "y": 400,
         "wires": [
             [
-                "743ee51225cea3f9",
-                "2ca3aaf94f91765b"
+                "3fe6b3901bb497c1",
+                "4fbac76e11413468"
             ],
             [
-                "757ae73b607250c7"
+                "d91793971b292b7c"
             ]
         ]
     },
     {
-        "id": "f3a62edab8dec4a4",
+        "id": "864d207e1ab4341e",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [
             {
@@ -201,14 +201,14 @@
         "y": 1100,
         "wires": [
             [
-                "30dcf13fae243745"
+                "9ffcf6eb056b0e76"
             ]
         ]
     },
     {
-        "id": "743ee51225cea3f9",
+        "id": "3fe6b3901bb497c1",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -223,9 +223,9 @@
         "wires": []
     },
     {
-        "id": "814d90fcba6b4806",
+        "id": "4652b49c70cfb52f",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -240,9 +240,9 @@
         "wires": []
     },
     {
-        "id": "011d0c178cecd91e",
+        "id": "02abbcaaa4347c91",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -254,14 +254,14 @@
         "y": 540,
         "wires": [
             [
-                "f652d9db8ca9ad69"
+                "af4786961e3f59bd"
             ]
         ]
     },
     {
-        "id": "f652d9db8ca9ad69",
+        "id": "af4786961e3f59bd",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make Insert Statement",
         "func": "msg.data = {\n    \"sql\":\"INSERT INTO NodeRed.Person (firstName, lastName, age, isAlive) VALUES (?,?,?,?)\",\n    \"values\":[\n        [\"Kyle\", \"Broflovski\", 10, true],\n        [\"Kenny\", \"McCormick\", 10, true]\n    ]\n}\nreturn msg;",
         "outputs": 1,
@@ -273,14 +273,14 @@
         "y": 540,
         "wires": [
             [
-                "e8b1d195daf054c9"
+                "8432a2b6bce8cbf6"
             ]
         ]
     },
     {
-        "id": "8d1b02995284231e",
+        "id": "c7bfa60595e32bfe",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -295,9 +295,9 @@
         "wires": []
     },
     {
-        "id": "ae428bc93de00b6b",
+        "id": "c8178598c8bf558d",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -318,18 +318,18 @@
         "y": 540,
         "wires": [
             [
-                "0dc8e7573f1a2135",
-                "9c28a616be164d64"
+                "26dc976bc11e1c46",
+                "7a6ac3a303a31b89"
             ],
             [
-                "8d1b02995284231e"
+                "c7bfa60595e32bfe"
             ]
         ]
     },
     {
-        "id": "0dc8e7573f1a2135",
+        "id": "26dc976bc11e1c46",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -344,9 +344,9 @@
         "wires": []
     },
     {
-        "id": "fe5206a5e862c580",
+        "id": "c174aab70a196331",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Insert Statement",
         "info": "",
         "x": 140,
@@ -354,9 +354,9 @@
         "wires": []
     },
     {
-        "id": "32ab4bef36434e8a",
+        "id": "a20e64dad022aa43",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "parameterized Insert Statement",
         "info": "",
         "x": 190,
@@ -364,9 +364,9 @@
         "wires": []
     },
     {
-        "id": "25a20af9b283e860",
+        "id": "8e7fd6a032896bc2",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Create Class",
         "info": "",
         "x": 130,
@@ -374,9 +374,9 @@
         "wires": []
     },
     {
-        "id": "5ee3989896db577e",
+        "id": "6a3964b293f582b0",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Delete Class",
         "info": "",
         "x": 130,
@@ -384,9 +384,9 @@
         "wires": []
     },
     {
-        "id": "b695003b3960a11a",
+        "id": "079901b565b2c643",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -401,9 +401,9 @@
         "wires": []
     },
     {
-        "id": "c244dc862c1cfec9",
+        "id": "0dd7411e5e24dd43",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -424,17 +424,17 @@
         "y": 1100,
         "wires": [
             [
-                "e2737e331a0d4bbc"
+                "ad3fdebf71c77ccb"
             ],
             [
-                "b695003b3960a11a"
+                "079901b565b2c643"
             ]
         ]
     },
     {
-        "id": "e2737e331a0d4bbc",
+        "id": "ad3fdebf71c77ccb",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -449,9 +449,9 @@
         "wires": []
     },
     {
-        "id": "119db0ad2e0d35f8",
+        "id": "f6870bcd0868da22",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -463,14 +463,14 @@
         "y": 680,
         "wires": [
             [
-                "c1760b65c60e6618"
+                "c49c41f792fe867a"
             ]
         ]
     },
     {
-        "id": "c1760b65c60e6618",
+        "id": "c49c41f792fe867a",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make JSON-Object",
         "func": "msg.data = {\n    \"className\":\"NodeRed.Person\",\n    \"firstName\":\"Eric\",\n    \"lastName\":\"Cartman\",\n    \"age\":10,\n    \"isAlive\":true\n}\nreturn msg;",
         "outputs": 1,
@@ -482,14 +482,14 @@
         "y": 680,
         "wires": [
             [
-                "a12c4b93a53908b1"
+                "dab1d40128510bf9"
             ]
         ]
     },
     {
-        "id": "2e3c923cf3987848",
+        "id": "7909fd5d70fe49c3",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -504,9 +504,9 @@
         "wires": []
     },
     {
-        "id": "442bab4c1f1e8c1e",
+        "id": "dc54df35d03be7bb",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -527,18 +527,18 @@
         "y": 680,
         "wires": [
             [
-                "7adaa8dc2b86cc8c",
-                "f8fa23351982f9a3"
+                "e18b2ca6a7a25c63",
+                "006a3016c7c34d17"
             ],
             [
-                "2e3c923cf3987848"
+                "7909fd5d70fe49c3"
             ]
         ]
     },
     {
-        "id": "7adaa8dc2b86cc8c",
+        "id": "e18b2ca6a7a25c63",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -553,9 +553,9 @@
         "wires": []
     },
     {
-        "id": "708773ae6b97b752",
+        "id": "03275cde1e51f37f",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [
             {
@@ -578,14 +578,14 @@
         "y": 960,
         "wires": [
             [
-                "3c53ed699ff376ee"
+                "35e288ac9aa0fd13"
             ]
         ]
     },
     {
-        "id": "4896c534067ea8dc",
+        "id": "ea73d3287448eb44",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -600,9 +600,9 @@
         "wires": []
     },
     {
-        "id": "9a1ef75296910431",
+        "id": "5afec92a1aeaa9e2",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -623,18 +623,18 @@
         "y": 960,
         "wires": [
             [
-                "68f73625b9fb4425",
-                "5b409eac73b418d8"
+                "f544ed5dd3d9b6fd",
+                "d97995e153472dc3"
             ],
             [
-                "4896c534067ea8dc"
+                "ea73d3287448eb44"
             ]
         ]
     },
     {
-        "id": "68f73625b9fb4425",
+        "id": "f544ed5dd3d9b6fd",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -649,9 +649,9 @@
         "wires": []
     },
     {
-        "id": "9b040c22c09cf282",
+        "id": "acd59f6c3a7aac3b",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "insert JSON-Object",
         "info": "",
         "x": 150,
@@ -659,9 +659,9 @@
         "wires": []
     },
     {
-        "id": "c1f588ba55129ba3",
+        "id": "2d58432c54d2aa2a",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -673,14 +673,14 @@
         "y": 820,
         "wires": [
             [
-                "bfc383bba2deade8"
+                "2dabbf7ad1d86834"
             ]
         ]
     },
     {
-        "id": "bfc383bba2deade8",
+        "id": "2dabbf7ad1d86834",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make Update Statement",
         "func": "msg.data = \"UPDATE NodeRed.Person SET isAlive = 0 WHERE firstName = 'Kenny'\"\nreturn msg;",
         "outputs": 1,
@@ -692,14 +692,14 @@
         "y": 820,
         "wires": [
             [
-                "f4688005536a09a1"
+                "d141040f9eead5e8"
             ]
         ]
     },
     {
-        "id": "ac1755b6f6fee89f",
+        "id": "af60032eb279f679",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Error",
         "active": true,
         "tosidebar": true,
@@ -714,9 +714,9 @@
         "wires": []
     },
     {
-        "id": "6b10fec9eae037b9",
+        "id": "2ba121aae06eb0a6",
         "type": "switch",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "filter Error",
         "property": "result",
         "propertyType": "msg",
@@ -737,18 +737,18 @@
         "y": 820,
         "wires": [
             [
-                "bd5c4b5763a2ef90",
-                "7ea16c99bd428882"
+                "939447562a46f093",
+                "8816fddf52e448d0"
             ],
             [
-                "ac1755b6f6fee89f"
+                "af60032eb279f679"
             ]
         ]
     },
     {
-        "id": "bd5c4b5763a2ef90",
+        "id": "939447562a46f093",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show successful",
         "active": true,
         "tosidebar": true,
@@ -763,9 +763,9 @@
         "wires": []
     },
     {
-        "id": "8c6d948e1d679c9a",
+        "id": "a569b7ee0d168381",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Update Statement",
         "info": "",
         "x": 150,
@@ -773,9 +773,9 @@
         "wires": []
     },
     {
-        "id": "1577cca82b7fd66d",
+        "id": "f4d2a4677ce8e8f3",
         "type": "inject",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "start",
         "props": [],
         "repeat": "",
@@ -787,14 +787,14 @@
         "y": 1320,
         "wires": [
             [
-                "304ed5ef2f39b00b"
+                "a87b771c6bc55ec3"
             ]
         ]
     },
     {
-        "id": "304ed5ef2f39b00b",
+        "id": "a87b771c6bc55ec3",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make Select Statement",
         "func": "msg.data = \"SELECT firstName, lastName, age, isAlive FROM NodeRed.Person WHERE age = 10\"\nreturn msg;",
         "outputs": 1,
@@ -806,14 +806,14 @@
         "y": 1320,
         "wires": [
             [
-                "0318faf9ec8178b6"
+                "559c18ccffc463c8"
             ]
         ]
     },
     {
-        "id": "61082fc6ebb275fb",
+        "id": "f4defe02b3684beb",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Select Statement",
         "info": "",
         "x": 140,
@@ -821,9 +821,9 @@
         "wires": []
     },
     {
-        "id": "1b85a2678217f898",
+        "id": "45bcc9f6888b1a57",
         "type": "debug",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "show Result",
         "active": true,
         "tosidebar": true,
@@ -838,9 +838,9 @@
         "wires": []
     },
     {
-        "id": "3c53ed699ff376ee",
+        "id": "35e288ac9aa0fd13",
         "type": "function",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "make Delete Statement",
         "func": "msg.data = \"DELETE FROM NodeRed.Person WHERE isAlive = 0\"\nreturn msg;",
         "outputs": 1,
@@ -852,14 +852,14 @@
         "y": 960,
         "wires": [
             [
-                "febdb184551953f4"
+                "0f47a1ca90a3223c"
             ]
         ]
     },
     {
-        "id": "6bfe2026adeea6e7",
+        "id": "4ded7a79e92ce371",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Delete Statement",
         "info": "",
         "x": 140,
@@ -867,9 +867,9 @@
         "wires": []
     },
     {
-        "id": "39b3bbd944a4cf7a",
+        "id": "d82432cd0168c4c5",
         "type": "comment",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Short example on how to create/delete Data/Classes in IRIS via Node-Red",
         "info": "",
         "x": 320,
@@ -877,246 +877,248 @@
         "wires": []
     },
     {
-        "id": "819fa4a6342a1bfc",
+        "id": "73b2bbdfc024c2af",
         "type": "link in",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "Show Result IN",
         "links": [
-            "2ca3aaf94f91765b",
-            "9c28a616be164d64",
-            "f8fa23351982f9a3",
-            "7ea16c99bd428882",
-            "5b409eac73b418d8"
+            "4fbac76e11413468",
+            "7a6ac3a303a31b89",
+            "006a3016c7c34d17",
+            "8816fddf52e448d0",
+            "d97995e153472dc3"
         ],
         "x": 145,
         "y": 1360,
         "wires": [
             [
-                "304ed5ef2f39b00b"
+                "a87b771c6bc55ec3"
             ]
         ]
     },
     {
-        "id": "2ca3aaf94f91765b",
+        "id": "4fbac76e11413468",
         "type": "link out",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "mode": "link",
         "links": [
-            "819fa4a6342a1bfc"
+            "73b2bbdfc024c2af"
         ],
         "x": 825,
         "y": 340,
         "wires": []
     },
     {
-        "id": "9c28a616be164d64",
+        "id": "7a6ac3a303a31b89",
         "type": "link out",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "mode": "link",
         "links": [
-            "819fa4a6342a1bfc"
+            "73b2bbdfc024c2af"
         ],
         "x": 815,
         "y": 480,
         "wires": []
     },
     {
-        "id": "f8fa23351982f9a3",
+        "id": "006a3016c7c34d17",
         "type": "link out",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "mode": "link",
         "links": [
-            "819fa4a6342a1bfc"
+            "73b2bbdfc024c2af"
         ],
         "x": 815,
         "y": 620,
         "wires": []
     },
     {
-        "id": "7ea16c99bd428882",
+        "id": "8816fddf52e448d0",
         "type": "link out",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "mode": "link",
         "links": [
-            "819fa4a6342a1bfc"
+            "73b2bbdfc024c2af"
         ],
         "x": 815,
         "y": 760,
         "wires": []
     },
     {
-        "id": "5b409eac73b418d8",
+        "id": "d97995e153472dc3",
         "type": "link out",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "mode": "link",
         "links": [
-            "819fa4a6342a1bfc"
+            "73b2bbdfc024c2af"
         ],
         "x": 815,
         "y": 900,
         "wires": []
     },
     {
-        "id": "30dcf13fae243745",
+        "id": "9ffcf6eb056b0e76",
         "type": "sf:node-red-iris-IRIS-DELETE-CLASS",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "Check Connection": true,
+        "credentials": {},
         "x": 510,
         "y": 1100,
         "wires": [
             [
-                "c244dc862c1cfec9"
+                "0dd7411e5e24dd43"
             ]
         ]
     },
     {
-        "id": "0318faf9ec8178b6",
+        "id": "559c18ccffc463c8",
         "type": "sf:node-red-iris-IRIS",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "x": 510,
         "y": 1320,
         "wires": [
             [
-                "1b85a2678217f898"
+                "45bcc9f6888b1a57"
             ]
         ]
     },
     {
-        "id": "febdb184551953f4",
+        "id": "0f47a1ca90a3223c",
         "type": "sf:node-red-iris-IRIS",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "x": 510,
         "y": 960,
         "wires": [
             [
-                "9a1ef75296910431"
+                "5afec92a1aeaa9e2"
             ]
         ]
     },
     {
-        "id": "f4688005536a09a1",
+        "id": "d141040f9eead5e8",
         "type": "sf:node-red-iris-IRIS",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "x": 510,
         "y": 820,
         "wires": [
             [
-                "6b10fec9eae037b9"
+                "2ba121aae06eb0a6"
             ]
         ]
     },
     {
-        "id": "a12c4b93a53908b1",
+        "id": "dab1d40128510bf9",
         "type": "sf:node-red-iris-IRIS-OO",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "x": 520,
         "y": 680,
         "wires": [
             [
-                "442bab4c1f1e8c1e"
+                "dc54df35d03be7bb"
             ]
         ]
     },
     {
-        "id": "e8b1d195daf054c9",
+        "id": "8432a2b6bce8cbf6",
         "type": "sf:node-red-iris-IRIS-INSERT",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "Create Class": false,
+        "credentials": {},
         "x": 540,
         "y": 540,
         "wires": [
             [
-                "ae428bc93de00b6b"
+                "c8178598c8bf558d"
             ]
         ]
     },
     {
-        "id": "6ed2281b9fecf4b7",
+        "id": "b037d7be8fad51c5",
         "type": "sf:node-red-iris-IRIS",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "holdConnection": 10,
         "Check Connection": true,
         "x": 510,
         "y": 400,
         "wires": [
             [
-                "91b9b8860533f999"
+                "45394288c5a9a9bc"
             ]
         ]
     },
     {
-        "id": "91acd2a9be6f9665",
+        "id": "ef913324c0e24797",
         "type": "sf:node-red-iris-IRIS-CREATE",
-        "z": "5c8dac7018c232ae",
+        "z": "582962ff6e21c7a7",
         "name": "",
         "IP": "localhost",
         "Port": 1972,
-        "Namespace": "TRAINING",
-        "Username": "_SYSTEM",
-        "Password": "sys",
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
         "Check Connection": true,
         "x": 540,
         "y": 260,
         "wires": [
             [
-                "d2051fc5d56f8df3"
+                "3ceba0ab8fb1c435"
             ]
         ]
     }

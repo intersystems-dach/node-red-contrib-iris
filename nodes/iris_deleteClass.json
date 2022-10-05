@@ -65,7 +65,7 @@
         {
             "name": "Namespace",
             "type": "str",
-            "value": "TRAINING",
+            "value": "User",
             "ui": {
                 "icon": "font-awesome/fa-database",
                 "type": "input",
@@ -80,7 +80,7 @@
         {
             "name": "Username",
             "type": "str",
-            "value": "_SYSTEM",
+            "value": "username",
             "ui": {
                 "icon": "font-awesome/fa-male",
                 "type": "input",
@@ -95,7 +95,7 @@
         {
             "name": "Password",
             "type": "str",
-            "value": "sys",
+            "value": "password",
             "ui": {
                 "icon": "font-awesome/fa-ellipsis-h",
                 "type": "input",

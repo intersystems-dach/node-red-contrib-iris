@@ -74,7 +74,7 @@
         {
             "name": "Namespace",
             "type": "str",
-            "value": "TRAINING",
+            "value": "User",
             "ui": {
                 "icon": "font-awesome/fa-database",
                 "type": "input",
@@ -89,7 +89,7 @@
         {
             "name": "Username",
             "type": "str",
-            "value": "_SYSTEM",
+            "value": "username",
             "ui": {
                 "icon": "font-awesome/fa-male",
                 "type": "input",
@@ -104,7 +104,7 @@
         {
             "name": "Password",
             "type": "str",
-            "value": "sys",
+            "value": "password",
             "ui": {
                 "icon": "font-awesome/fa-ellipsis-h",
                 "type": "input",
@@ -300,7 +300,7 @@
         "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\n//Set current Namespace if requested\nif(msg.hasOwnProperty(\"getNamespace\")){\n    msg.getNamespace = flow.get(\"namespace\");\n}\n//Check if msg.data has the right fields\nif(!msg.data.hasOwnProperty(\"className\")){\n    throw \"Could not find className field!\";\n}\n\nif(!msg.data.hasOwnProperty(\"names\") && !env.get(\"WithNames\")){\n    throw \"Could not find names field!\";\n}\n\nif(env.get(\"Seperator\") == \"\"){\n    throw \"No Seperator defined!\";\n}\n\nvar rows = msg.payload.split(\"\\n\");\nvar sep = env.get(\"Seperator\");\nvar names;\nif(env.get(\"WithNames\")){\n    names = rows[0].split(sep);\n    rows.shift();\n}\nelse{\n    names = msg.data.names;\n}\nvar namesString = \"(\";\nvar qm = \"(\";\nfor(var i in names){\n    namesString += names[i];\n    qm += \"?\";\n    if(i < names.length-1){\n        namesString += \",\";\n        qm += \",\";\n    }\n}\nqm+=\")\";\nnamesString += \")\";\nvar sql = \"insert into \" + msg.data.className + \" \" + namesString +\n                \" values \" + qm;\n                \nconst namespace = flow.get(\"namespace\")\nconst iris = flow.get(\"iris\");\nvar result = 1;\nmsg.error = \"\";\n\nfor(i in rows){\n    try{\n        //Create value string list\n        var values = createValuesString(rows[i].split(sep));\n        if(i< rows.length-1){\n            values = values.substring(0,values.length-1);\n        }\n        else{\n            if(values == \"\"){\n                break;\n            }\n        }\n        //Insert\n        exInsert(sql, values);\n    }\n    catch(e){\n        var line = Number(i) + 1;\n        if(env.get(\"WithNames\")){\n            line += 1;\n        }\n        msg.error += \"Could not Insert at (\"+line+\":\"+values+\"):\\n\" + e + \"\\n\\n\";\n        result = 0;\n    }\n}\n\n//Delete error field if no error happend\nif(msg.error == \"\"){\n    delete msg.error;\n}\n\nif(result == undefined){\n    result = 0;\n}\nmsg.result = result;\nmsg.payload = msg.payloadBackup;\ndelete msg.payloadBackup;\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction exInsert(sql, values){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"exInsert\",\n                                            sql, \n                                            values, \n                                            namespace);\n    return r;\n}\n\n//Creates a String list from an Array\nfunction createValuesString(arr){\n    var values = \"\";\n    for (var i in arr){\n        values += arr[i] + \",\";\n    }\n    values = values.substring(0, values.length -1);\n    return values;\n}\n\n//Get the Objectscript type of the value\n//Works with %String, %Integer, %Double and %Boolean\nfunction getType(value){\n    var type = typeof value;\n    if(type == \"boolean\"){\n        return \"%Boolean\";\n    }\n    if(type == \"number\"){\n        if(String(value).includes(\".\")){\n            return \"%Double\";\n        }\n        return \"%Integer\";\n    }\n    return \"%String\";\n}\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    flow.set(\"onHold\", false);\n   let connectionClass = class{isClosed(){return true;} close(){}}\n       flow.set(\"conn\", new connectionClass());\n  throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
         "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nflow.get(\"conn\").close();",
         "libs": [],
         "x": 1190,

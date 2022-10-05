@@ -74,7 +74,7 @@
         {
             "name": "Namespace",
             "type": "str",
-            "value": "TRAINING",
+            "value": "User",
             "ui": {
                 "icon": "font-awesome/fa-database",
                 "type": "input",
@@ -89,7 +89,7 @@
         {
             "name": "Username",
             "type": "str",
-            "value": "_SYSTEM",
+            "value": "username",
             "ui": {
                 "icon": "font-awesome/fa-male",
                 "type": "input",
@@ -104,7 +104,7 @@
         {
             "name": "Password",
             "type": "str",
-            "value": "sys",
+            "value": "password",
             "ui": {
                 "icon": "font-awesome/fa-ellipsis-h",
                 "type": "input",
@@ -536,7 +536,7 @@
         "func": "if(flow.get(\"conn\").isClosed()){\n    if(flow.get(\"onHold\")){\n        buildConnection();\n    }\n    else{\n        throw \"No Connection established!\";\n    }\n}\nconst iris = flow.get(\"iris\");\nconst namespace = flow.get(\"namespace\")\ntry{\n    msg.result = insertObjectOriented(msg.data);\n    if(msg.result != 1){\n        msg.error = msg.result\n        msg.result = 0\n    }\n}catch(e){\n    msg.error = e.message\n    msg.result = 0\n}\n\n\nreturn msg;\n\n/*FUNCTIONS*/\n\n//Calls the objectscript method to Insert data\nfunction insertObjectOriented(jsonstring){\n    var r = iris.classMethodValue(\"Node.IRISInterface\",\n                                            \"InsertObjectOriented\",\n                                            namespace,\n                                            jsonstring);\n    return r;\n}\n\nfunction buildConnection(){\n    var irisnative = global.get(\"iris\");\n    //import irisnative from 'intersystems-iris-native';\n    var ip = env.get(\"IP\");\n    var port = env.get(\"Port\");\n    var namespace = env.get(\"Namespace\");\n    var username = env.get(\"Username\");\n    var password = env.get(\"Password\");\n    // Create connection to InterSystems IRIS\n    flow.set(\"onHold\", false);\n    var connection;\n    try{\n        connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n    }\n    catch(e){\n        throw \"Could not connect to IRIS!\"\n    }\n    const iris = connection.createIris();\n    flow.set(\"conn\", connection);\n    flow.set(\"iris\", iris);\n}\n",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n//Get irisnative\n        //const irisnative = require('intersystems-iris-native')\nvar irisnative = global.get(\"iris\");\n        //import irisnative from 'intersystems-iris-native';\n\n//Set Connection Properties\nvar ip =env.get(\"IP\");\nvar port = env.get(\"Port\");\nvar namespace = env.get(\"Namespace\");\nvar username =env.get(\"Username\");\nvar password =env.get(\"Password\");\n\n//Connect\nvar connection;\ntry{\n    connection = irisnative.createConnection({host: ip, port: port, ns: namespace, user: username, pwd: password})\n}\ncatch(e){\n    flow.set(\"onHold\", false);\n   let connectionClass = class{isClosed(){return true;}}; \n      flow.set(\"conn\", new connectionClass());\n        throw \"Could not connect to IRIS:\\n\" + e;\n}   \n\n// Create InterSystems IRIS native object\nconst iris = connection.createIris();\nflow.set(\"conn\", connection);\nflow.set(\"iris\", iris);\nflow.set(\"namespace\",env.get(\"Namespace\"));",
         "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nif(!flow.get(\"conn\").isClosed()){\n    flow.get(\"conn\").close();\n}",
         "libs": [],
         "x": 710,
