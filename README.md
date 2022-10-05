@@ -96,10 +96,14 @@ msg.data = {
 
 <p> See Node description for further informations.</p>
 </details>
+
+
+<p>
 <br>
 <a href= "https://www.npmjs.com/package/node-red-contrib-iris">npm</a><br>
 <a href= "https://github.com/phil1436/node-red-contrib-iris">GitHub</a><br>
 <a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a>
-<br>
-<br>
-<p >by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
+<p>
+<font size = "-2">
+
+<p>by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p></font>
