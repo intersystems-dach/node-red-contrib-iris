@@ -46,7 +46,7 @@ functionGlobalContext: {
 <details>
     <summary><b>Download Node.IRISInterface</b></summary>
     <p>
-        Go to <a href = 'https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls'>raw.githubusercontent</a>. Do a right click on page and choose <i>Save Page As...</i> . Import the class into Intersystems IRIS. When you only operate in one namespace, import the class into this namespace. When you have multiple namespace you want to operate with, map the class to namespace <b>%ALL</b>.
+        Go to <a href = 'https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls'>raw.githubusercontent</a>. Do a right click on page and choose <i>Save Page As...</i> . Import the class into Intersystems IRIS. When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access, map the class to namespace <b>%ALL</b>.
     </p>
 </details>
 
@@ -85,7 +85,7 @@ msg.data = {
     <summary><b>Nodes</b></summary>
     <p>
         <ul>
-            <li><b>IRIS</b>: A Node for executing DML statements such as SELECT, UPDATE, INSERT and DELETE and DDL statements as CREATE, ALTER and DROP in Intersystems IRIS.</li>
+            <li><b>IRIS</b>: A Node for executing DML statements such as SELECT, UPDATE, INSERT and DELETE and DDL statements such as CREATE, ALTER and DROP in Intersystems IRIS.</li>
             <li><b>IRIS_CREATE</b>: Creates a class in Intersystems IRIS.</li>
             <li><b>IRIS_DELETE_CLASS</b>: Deletes a class in Intersystems IRIS.</li>
             <li><b>IRIS_INSERT</b>: A Node for only SQL-INSERT-Statements. Can also generate the class, if it does not already exists, based on the statement.</li>
@@ -96,7 +96,10 @@ msg.data = {
 
 <p> See Node description for further informations.</p>
 </details>
-
+<br>
+<a href= "https://www.npmjs.com/package/node-red-contrib-iris">npm</a><br>
+<a href= "https://github.com/phil1436/node-red-contrib-iris">GitHub</a><br>
+<a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a>
 <br>
 <br>
 <p >by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
