@@ -13,7 +13,7 @@
     <p>
         <ul>
             <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> installed in Node-RED.</li>
-            <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.1) class installed in Intersystems IRIS.</li>
+            <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.2) class installed in Intersystems IRIS.</li>
         </ul>
     </p>
 </details>
@@ -90,6 +90,7 @@ msg.data = {
             <li><b>IRIS_DELETE_CLASS</b>: Deletes a class in Intersystems IRIS.</li>
             <li><b>IRIS_INSERT</b>: A Node for only SQL-INSERT-Statements. Can also generate the class, if it does not already exists, based on the statement.</li>
             <li><b>IRIS_OO</b>: Can insert a hierarchical JSON-Object.</li>
+            <li><b>IRIS_CALL</b>: Call Intersystems IRIS classmethods.</li>
         </ul>
     </p>
     <img src = "https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/src/NodesOverview.png" width = "200">

@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-iris",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Access to Intersystems IRIS Data Platform",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,8 @@
       "IRIS_CREATE": "nodes/iris_create_wrapper.js",
       "IRIS_DELETE_CLASS": "nodes/iris_deleteClass_wrapper.js",
       "IRIS_INSERT": "nodes/iris_insert_wrapper.js",
-      "IRIS_OO": "nodes/iris_oo_wrapper.js"
+      "IRIS_OO": "nodes/iris_oo_wrapper.js",
+      "IRIS_CALL": "nodes/iris_call_wrapper.js"
     }
   }
 }

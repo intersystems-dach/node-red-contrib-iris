@@ -19,7 +19,7 @@
         "onceDelay": 0.1,
         "topic": "",
         "x": 110,
-        "y": 260,
+        "y": 160,
         "wires": [
             [
                 "4a4dc7d911fe7849"
@@ -31,14 +31,14 @@
         "type": "function",
         "z": "582962ff6e21c7a7",
         "name": "make create Structure",
-        "func": "msg .data = {\n    \"package\": \"NodeRed\",\n    \"className\": \"Person\",\n    \"properties\":[\n        {\n            \"name\": \"firstName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"lastName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"age\",\n            \"type\": \"int\"\n        }\n        ,\n        {\n            \"name\": \"isAlive\",\n            \"type\": \"boolean\"\n        }\n    ]\n}\nreturn msg;",
+        "func": "msg.data = {\n    \"package\": \"NodeRed\",\n    \"className\": \"Person\",\n    \"superclasses\": \"%Persistent\",\n    \"properties\":[\n        {\n            \"name\": \"firstName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"lastName\",\n            \"type\": \"string\"\n        },\n        {\n            \"name\": \"age\",\n            \"type\": \"int\"\n        }\n        ,\n        {\n            \"name\": \"isAlive\",\n            \"type\": \"boolean\"\n        }\n    ],\n    \"methods\":[\n        {\n            \"name\":\"sayHello\",\n            \"classMethod\": true,\n            \"returnType\": \"%String\",\n            \"body\": \"return \\\"Hello!\\\"\"\n        }\n        ]\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 310,
-        "y": 260,
+        "y": 160,
         "wires": [
             [
                 "ef913324c0e24797"
@@ -59,7 +59,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 870,
-        "y": 280,
+        "y": 180,
         "wires": []
     },
     {
@@ -83,7 +83,7 @@
         "repair": false,
         "outputs": 2,
         "x": 700,
-        "y": 260,
+        "y": 160,
         "wires": [
             [
                 "4652b49c70cfb52f"
@@ -236,7 +236,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 880,
-        "y": 240,
+        "y": 140,
         "wires": []
     },
     {
@@ -370,7 +370,7 @@
         "name": "Create Class",
         "info": "",
         "x": 130,
-        "y": 220,
+        "y": 120,
         "wires": []
     },
     {
@@ -873,7 +873,7 @@
         "name": "Short example on how to create/delete Data/Classes in IRIS via Node-Red",
         "info": "",
         "x": 320,
-        "y": 140,
+        "y": 40,
         "wires": []
     },
     {
@@ -972,7 +972,6 @@
         "Username": "username",
         "Password": "password",
         "Check Connection": true,
-        "credentials": {},
         "x": 510,
         "y": 1100,
         "wires": [
@@ -1074,7 +1073,6 @@
         "holdConnection": 10,
         "Check Connection": true,
         "Create Class": false,
-        "credentials": {},
         "x": 540,
         "y": 540,
         "wires": [
@@ -1115,10 +1113,84 @@
         "Password": "password",
         "Check Connection": true,
         "x": 540,
-        "y": 260,
+        "y": 160,
         "wires": [
             [
                 "3ceba0ab8fb1c435"
+            ]
+        ]
+    },
+    {
+        "id": "8b2d0c29ab414a90",
+        "type": "inject",
+        "z": "582962ff6e21c7a7",
+        "name": "start",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 110,
+        "y": 280,
+        "wires": [
+            [
+                "e0229e16b25472fe"
+            ]
+        ]
+    },
+    {
+        "id": "e0229e16b25472fe",
+        "type": "function",
+        "z": "582962ff6e21c7a7",
+        "name": "call sayHello",
+        "func": "msg.data = {\n    \"className\": \"NodeRed.Person\",\n    \"method\":\"sayHello\",\n    \"parameters\":[]\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "d83c736533bd064b"
+            ]
+        ]
+    },
+    {
+        "id": "6d3e1eb949d83242",
+        "type": "debug",
+        "z": "582962ff6e21c7a7",
+        "name": "show Result",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "result",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 870,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d83c736533bd064b",
+        "type": "IRIS_CALL",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "Check Connection": true,
+        "x": 530,
+        "y": 280,
+        "wires": [
+            [
+                "6d3e1eb949d83242"
             ]
         ]
     }

@@ -1,5 +1,5 @@
-/// <i><b>v 1.1</b></i><br>
-/// Server side Interface to connect to <a href = "https://nodejs.org/en/">Node.js</a>
+/// <i><b>v 1.2</b></i><br>
+/// Server side Interface for <a href = "https://flows.nodered.org/node/node-red-contrib-iris">node-red-contrib-iris</a>
 Class Node.IRISInterface [ Abstract ]
 {
 
@@ -23,6 +23,7 @@ Class Node.IRISInterface [ Abstract ]
 /// <li>superClasses: Superclasses of the class, written as a String list. (%Persistent and %JSON.Adaptor are always superclasses)</li>
 /// </ul>
 /// Needs to compile the class afterwards. <br>Use <METHOD>CompileClass</METHOD> or use <EXAMPLE>DO $SYSTEM.OBJ.Compile("className")</EXAMPLE>
+/// Old method for node-red-contrib-iris 1.0.2 or before!
 /// </details>
 ClassMethod CreateClass(namespace As %String = 0, package As %String, className As %String, properties As %String = "", propTypes As %String = "", superClasses As %String = "") As %Status
 {
@@ -47,7 +48,7 @@ ClassMethod CreateClass(namespace As %String = 0, package As %String, className 
 
 	//Add superclasses
  	SET:(superClasses '= "") superClasses = ","_superClasses
- 	SET cdef.Super = "%Persistent,%JSON.Adaptor"_superClasses
+ 	SET cdef.Super = "%Persistent"_superClasses
 
  	// add Properties
  	SET propLst = $LISTFROMSTRING(properties)
@@ -71,9 +72,11 @@ ClassMethod CreateClass(namespace As %String = 0, package As %String, className 
 		 	throw Err
 	 	}
 	 	
+	 	//d pdef.Parameters.SetAt("AGE()", "POPSEC")
 	 	DO cdef.Properties.Insert(pdef)
 	 	SET pdef.Type = type
-	 	
+		//SET pdef.Required = 1
+		//d pdef.ParameterSet("MAXVAL = 100")
  	}
 	
 	//Save class
@@ -82,6 +85,123 @@ ClassMethod CreateClass(namespace As %String = 0, package As %String, className 
 	//Set old namespace
  	ZN beforeNS
 
+ 	return $$$OK
+}
+
+/// <details>
+/// <summary>Creates a new IRIS Class.</summary>
+/// <ul>
+/// <li>namespace: The namespace where you want to create the class.</li>
+/// <li>package: The package name of the class.</li>
+/// <li>className: The name of the class.</li>
+/// <li>superClasses: Superclasses of the class, written as a String list. (%Persistent and %JSON.Adaptor are always superclasses)</li>
+/// <li>propertiesJSON: A JSON String defining the properties of the class.</li>
+/// <li>methodsJSON: A JSON String defining the methods of the class.</li>
+/// </ul>
+/// Needs to compile the class afterwards. <br>Use <METHOD>CompileClass</METHOD> or use <EXAMPLE>DO $SYSTEM.OBJ.Compile("className")</EXAMPLE>
+/// New method for node-red-contrib-iris 1.0.3 or later!
+/// </details>
+ClassMethod CreateClassNew(namespace As %String = 0, package As %String, className As %String, superClasses As %String = "", propertiesJSON As %String = "", methodsJSON As %String = "") As %Status
+{
+	SET class = package_"."_className
+	//Set namespace
+	SET beforeNS = $NAMESPACE
+	SET:(namespace = 0) namespace = $NAMESPACE
+	ZN namespace
+	SET exists = ##class(%Dictionary.CompiledClass).%ExistsId(class)
+	if exists{
+		SET ex = ##class(%Exception.General).%New("Class "_class_" already exists!")
+		ZN beforeNS
+		throw ex
+	}
+
+	//Define Class
+	SET cdef = ##class(%Dictionary.ClassDefinition).%New(class)
+ 	if $SYSTEM.Status.IsError(cdef) {
+	 	DO $system.Status.DecomposeStatus(%objlasterror,.Err) 
+ 		throw Err
+ 	}
+
+	//Add superclasses
+ 	SET:(superClasses '= "") cdef.Super = superClasses
+
+
+	if propertiesJSON '= ""{
+		SET propDA = ##class(%DynamicArray).%FromJSON(propertiesJSON)
+		//SET i = propDA.%GetIterator()
+		SET i = propDA.%Pop()
+		while i '= ""{
+			SET pdef = ##class(%Dictionary.PropertyDefinition).%New(className_":"_i.name)
+			if $SYSTEM.Status.IsError(pdef) {
+		 		DO $system.Status.DecomposeStatus(%objlasterror,.Err) 
+		 		throw Err
+	 		}
+			DO cdef.Properties.Insert(pdef)
+			if i.%IsDefined("type"){
+				SET type = i.type
+			}
+			else{
+				SET type = "%String"
+			}
+	 		SET pdef.Type = type
+
+			if i.%IsDefined("required"){
+				SET pdef.Required = i.required
+			}
+
+			if i.%IsDefined("parameters"){
+				SET params = i.parameters
+				SET j = params.%Pop()
+				while j '= ""{
+					do pdef.Parameters.SetAt(j.value, j.name)
+					SET j = params.%Pop()
+				}
+			}
+
+			SET i = propDA.%Pop()
+		}
+	}
+
+	if methodsJSON '= ""{
+		SET methDA = ##class(%DynamicArray).%FromJSON(methodsJSON)
+		SET i = methDA.%Pop()
+		while i '= ""{
+			SET mdef = ##class(%Dictionary.MethodDefinition).%New(className_":"_i.name)
+			if $SYSTEM.Status.IsError(mdef) {
+		 		DO $system.Status.DecomposeStatus(%objlasterror,.Err) 
+		 		throw Err
+	 		}
+
+			if i.%IsDefined("parameters"){
+				do mdef.FormalSpecSet(i.parameters)
+			}
+			
+			DO cdef.Methods.Insert(mdef)
+			if i.%IsDefined("returnType"){
+				SET mdef.ReturnType  = i.returnType
+			}
+
+			if i.%IsDefined("classMethod"){
+				SET mdef.ClassMethod  = i.classMethod
+			}
+
+			if i.%IsDefined("body"){
+				SET mdef.Implementation.LineTerminator = $c(13,10)
+				SET l = $LFS(i.body,";")
+				for i = 1:1:$LL(l){
+					DO mdef.Implementation.WriteLine("	"_$LG(l,i)_" ")
+				}
+				//DO mdef.Implementation.Write(i.body)
+			}
+
+			SET i = propDA.%Pop()
+		}
+	}
+	//Save class
+ 	DO cdef.%Save()
+	
+	//Set old namespace
+ 	ZN beforeNS
  	return $$$OK
 }
 
