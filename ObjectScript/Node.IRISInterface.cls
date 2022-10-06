@@ -87,7 +87,7 @@ ClassMethod CreateClass(namespace As %String = 0, package As %String, className 
 
  	return $$$OK
 }
-
+ 
 /// <details>
 /// <summary>Creates a new IRIS Class.</summary>
 /// <ul>
