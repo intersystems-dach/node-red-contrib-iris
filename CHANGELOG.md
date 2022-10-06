@@ -1,7 +1,7 @@
 [v1.0.3](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.3)  (2022-10-06)
 --------------------------------------------------
 - Methods support in IRIS_CREATE.
-- Properties extended
+- Properties extended in IRIS_CREATE.
 - Node.IRISInterface update (v1.2)
 - IRIS_CALL added
 - init CHANGELOG
