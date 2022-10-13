@@ -1,3 +1,9 @@
+[v1.0.4](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.4)  (2022-10-13)
+--------------------------------------------------
+- IRIS bugfixes
+- IRIS_INSERT bugfixes
+- Node.IRISInterface update (v1.3)
+
 [v1.0.3](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.3)  (2022-10-06)
 --------------------------------------------------
 - Methods support in IRIS_CREATE.
