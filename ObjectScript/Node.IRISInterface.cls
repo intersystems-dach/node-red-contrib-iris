@@ -1,4 +1,4 @@
-/// <i><b>v 1.2</b></i><br>
+/// <i><b>v 1.3</b></i><br>
 /// Server side Interface for <a href = "https://flows.nodered.org/node/node-red-contrib-iris">node-red-contrib-iris</a>
 Class Node.IRISInterface [ Abstract ]
 {
@@ -87,7 +87,7 @@ ClassMethod CreateClass(namespace As %String = 0, package As %String, className 
 
  	return $$$OK
 }
- 
+
 /// <details>
 /// <summary>Creates a new IRIS Class.</summary>
 /// <ul>
@@ -314,6 +314,7 @@ ClassMethod exInsert(sql As %String, params As %String = "", namespace As %Strin
 	for i = 0:1:$LL(list)
 	{
 		SET values(i) = $LG(list,i)
+		SET values(i) = $REPLACE(values(i), "~",",")
 	}
 	s b = 1
 	//Make Execute
@@ -443,6 +444,8 @@ ClassMethod ExecArray(sql As %String, params As %String = "", namespace As %Stri
 	for i = 0:1:$LL(list)
 	{
 		SET values(i) = $LG(list,i)
+		SET values(i) = $REPLACE(values(i), "~",",")
+
 	}
 	try{
 
