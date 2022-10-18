@@ -1,3 +1,8 @@
+[v1.0.5](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.5)  (2022-10-17)
+--------------------------------------------------
+- Problems with resolving ServerProperties.json fixed
+- README update
+
 [v1.0.4](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.4)  (2022-10-13)
 --------------------------------------------------
 - IRIS bugfixes

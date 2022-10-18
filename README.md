@@ -12,7 +12,7 @@
     <summary><b>Required</b></summary>
     <p>
         <ul>
-            <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> installed in Node-RED.</li>
+            <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a>(v 1.2.0) installed in Node-RED.</li>
             <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.3) class installed in Intersystems IRIS.</li>
         </ul>
     </p>
@@ -33,10 +33,11 @@ npm i node-red-contrib-iris
 <details>
     <summary><b>Import Native API</b></summary>
     <p>
-        In <code>~/.node-red/settings.js</code> add module in <code>functionGlobalContext</code>
+        In <code>~/.node-red/settings.js</code> add module in (already existing) <code>functionGlobalContext</code>
         
 <pre>
 functionGlobalContext: {
+    // os:require('os'),
     iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')
 }
 </pre>
