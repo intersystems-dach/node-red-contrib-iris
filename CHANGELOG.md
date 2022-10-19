@@ -1,3 +1,9 @@
+[v1.0.6](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.6)  (2022-10-19)
+--------------------------------------------------
+- Bug fixes
+- IRIS_CALL and IRIS_CREATE icon bug fixed
+- README update
+
 [v1.0.5](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.5)  (2022-10-18)
 --------------------------------------------------
 - Problems with resolving ServerProperties.json fixed

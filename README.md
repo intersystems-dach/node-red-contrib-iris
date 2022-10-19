@@ -12,7 +12,7 @@
     <summary><b>Required</b></summary>
     <p>
         <ul>
-            <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a>(v 1.2.0) installed in Node-RED.</li>
+            <li><a href="https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native">Native API</a> (v 1.2.0) installed in Node-RED.</li>
             <li><a href = "https://github.com/phil1436/node-red-iris/tree/master/ObjectScript">Node.IRISInterface</a> (v 1.3) class installed in Intersystems IRIS.</li>
         </ul>
     </p>
@@ -33,7 +33,7 @@ npm i node-red-contrib-iris
 <details>
     <summary><b>Import Native API</b></summary>
     <p>
-        In <code>~/.node-red/settings.js</code> add module in (already existing) <code>functionGlobalContext</code>
+        In <code>~/.node-red/settings.js</code> add module in (already existing) <code>functionGlobalContext</code>:
         
 <pre>
 functionGlobalContext: {
@@ -41,6 +41,7 @@ functionGlobalContext: {
     iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')
 }
 </pre>
+See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a>.
 </p>
 </details>
 
@@ -99,6 +100,27 @@ msg.data = {
 <p> See Node description for further informations.</p>
 </details>
 
+<details>
+    <summary><b>Bugs</b></summary>
+    <p>
+        <ul>
+            <li>Currently does not work in Docker Container</li>
+            <li>The statement will be parametrized wrong if whitespaces and commas used in strings. Please parametrize the Statement before. Example:<br>
+Does not work:
+<pre>
+msg.data = "SELECT * FROM NodeRed.Person WHERE Name = 'Smith, John'"
+</pre>
+Will work:
+<pre>
+msg.data = {
+    "sql":"SELECT * FROM NodeRed.Person WHERE Name = ?,
+    "values":["Smith, John"]
+    }
+</pre>
+            </li>
+        </ul>
+    </p>
+</details>
 
 <p>
 <br>
