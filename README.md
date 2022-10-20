@@ -42,7 +42,7 @@ functionGlobalContext: {
 }
 </pre>
 
-You can find the API package under <code>.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md">README</a> for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
+You can find the API package under <code>.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md">README</a> file for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
 
 See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a> for how to load additional modules into Node-RED.
 </p>
@@ -52,7 +52,7 @@ See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading
     <summary><b>Download Node.IRISInterface</b></summary>
     <p>
         Go to <a href = 'https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls'>raw.githubusercontent</a>. Do a right click on the page and choose <i>Save Page As...</i> . Afterwards go to the InterSystems Management Portal and navigate to <i>System Explorer > Classes</i> and click on <i>Import</i>. There you select the file you just downloaded and click <i>Import</i>.<br>
-         When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access, <a href = "https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_namespace#GSA_config_namespace_addmap_all">map the class to namespace %ALL</a>.
+         When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access to, <a href = "https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_namespace#GSA_config_namespace_addmap_all">map the class to namespace %ALL</a>.
     </p>
 </details>
 
@@ -108,7 +108,7 @@ msg.data = {
     <summary><b>Bugs</b></summary>
     <p>
         <ul>
-            <li>Currently does not work in Docker Container</li>
+            <li>Currently does not work in Docker Container!</li>
             <li>The statement will be parametrized wrong if whitespaces and commas used in strings. Please parametrize the Statement before. Example:<br>
 Does not work:
 <pre>
