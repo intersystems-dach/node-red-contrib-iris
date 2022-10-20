@@ -42,7 +42,7 @@ functionGlobalContext: {
 }
 </pre>
 
-You can find the API package under <code>~/.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md">README</a> for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
+You can find the API package under <code>.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md">README</a> for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
 
 See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a> for how to load additional modules into Node-RED.
 </p>
@@ -131,6 +131,7 @@ msg.data = {
 <a href= "https://www.npmjs.com/package/node-red-contrib-iris">npm</a><br>
 <a href= "https://github.com/phil1436/node-red-contrib-iris">GitHub</a><br>
 <a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a><br>
+<a href= "https://github.com/phil1436/node-red-contrib-iris/blob/master/CHANGELOG.md">CHANGELOG</a><br>
 <a href= "https://community.intersystems.com/post/intersystems-iris-integration-node-red">InterSystems Developer Community</a>
 </p>
 <br>
