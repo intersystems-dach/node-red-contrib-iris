@@ -184,6 +184,7 @@
     ],
     "meta": {
         "module": "IRIS_Insert_viaFile",
+        "type": "IRIS_Insert_viaFile",
         "version": "0.0.2",
         "author": "Philipp B.",
         "keywords": "IRIS,InterSystems,Database"

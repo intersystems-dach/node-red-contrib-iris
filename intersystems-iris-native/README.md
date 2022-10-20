@@ -11,4 +11,5 @@ Supported for:
 <li>Linux Ubunutu 18.04 x64</li>
 <li>Linux Ubunutu 18.04 ARM64</li>
 <li>Linux Red Hat 8 x64</li>
+<li>Linux Red Hat 8 ARM64</li>
 </ul>

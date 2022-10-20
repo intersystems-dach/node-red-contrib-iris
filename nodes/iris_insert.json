@@ -154,7 +154,8 @@
         }
     ],
     "meta": {
-        "module": "IRIS_Insert",
+        "module": "IRIS_INSERT",
+        "type": "IRIS_INSERT",
         "version": "0.0.6",
         "author": "Philipp B.",
         "keywords": "IRIS,InterSystems,Database"

@@ -125,7 +125,8 @@
         }
     ],
     "meta": {
-        "module": "IRIS_Create",
+        "module": "IRIS_CREATE",
+        "type": "IRIS_CREATE",
         "version": "0.1.0",
         "author": "Philipp B.",
         "keywords": "IRIS,InterSystems,Database",

@@ -118,7 +118,8 @@
         }
     ],
     "meta": {
-        "module": "IRIS_Delete_Class",
+        "module": "IRIS_DELETE_CLASS",
+        "type": "IRIS_DELETE_CLASS",
         "version": "0.0.1",
         "author": "Philipp B.",
         "keywords": "IRIS,InterSystems,Database"

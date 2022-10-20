@@ -146,6 +146,7 @@
     ],
     "meta": {
         "module": "IRIS_OO",
+        "type": "IRIS_OO",
         "version": "0.0.1",
         "author": "Philipp B.",
         "keywords": "IRIS,InterSystems,Database"

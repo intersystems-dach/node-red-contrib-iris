@@ -1,3 +1,8 @@
+[v1.0.8](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.8)  (2022-10-20)
+--------------------------------------------------
+- Nodes name edited (Nodes already in your flows will not be found anymore, please replace them or downgrade package to 1.0.7!)
+- Red Hat 8 ARM64 added to intersystems-iris-native
+
 [v1.0.7](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.7)  (2022-10-20)
 --------------------------------------------------
 - ServerProperties now supports 'Hide Password' and 'Check Connection'

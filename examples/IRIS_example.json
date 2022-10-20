@@ -41,7 +41,7 @@
         "y": 160,
         "wires": [
             [
-                "ef913324c0e24797"
+                "d5bf7c2dbb8bbffe"
             ]
         ]
     },
@@ -127,7 +127,7 @@
         "y": 400,
         "wires": [
             [
-                "b037d7be8fad51c5"
+                "01e364ac138917bc"
             ]
         ]
     },
@@ -201,7 +201,7 @@
         "y": 1100,
         "wires": [
             [
-                "9ffcf6eb056b0e76"
+                "e629276f30272f90"
             ]
         ]
     },
@@ -273,7 +273,7 @@
         "y": 540,
         "wires": [
             [
-                "8432a2b6bce8cbf6"
+                "98947dc413f78d8f"
             ]
         ]
     },
@@ -482,7 +482,7 @@
         "y": 680,
         "wires": [
             [
-                "dab1d40128510bf9"
+                "241576b6d5e92cab"
             ]
         ]
     },
@@ -692,7 +692,7 @@
         "y": 820,
         "wires": [
             [
-                "d141040f9eead5e8"
+                "6473d4275705ce34"
             ]
         ]
     },
@@ -806,7 +806,7 @@
         "y": 1320,
         "wires": [
             [
-                "559c18ccffc463c8"
+                "4c9a078e6f0f71bc"
             ]
         ]
     },
@@ -852,7 +852,7 @@
         "y": 960,
         "wires": [
             [
-                "0f47a1ca90a3223c"
+                "7246377015c25b9b"
             ]
         ]
     },
@@ -962,165 +962,6 @@
         "wires": []
     },
     {
-        "id": "9ffcf6eb056b0e76",
-        "type": "sf:node-red-iris-IRIS-DELETE-CLASS",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "Check Connection": true,
-        "x": 510,
-        "y": 1100,
-        "wires": [
-            [
-                "0dd7411e5e24dd43"
-            ]
-        ]
-    },
-    {
-        "id": "559c18ccffc463c8",
-        "type": "sf:node-red-iris-IRIS",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "x": 510,
-        "y": 1320,
-        "wires": [
-            [
-                "45bcc9f6888b1a57"
-            ]
-        ]
-    },
-    {
-        "id": "0f47a1ca90a3223c",
-        "type": "sf:node-red-iris-IRIS",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "x": 510,
-        "y": 960,
-        "wires": [
-            [
-                "5afec92a1aeaa9e2"
-            ]
-        ]
-    },
-    {
-        "id": "d141040f9eead5e8",
-        "type": "sf:node-red-iris-IRIS",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "x": 510,
-        "y": 820,
-        "wires": [
-            [
-                "2ba121aae06eb0a6"
-            ]
-        ]
-    },
-    {
-        "id": "dab1d40128510bf9",
-        "type": "sf:node-red-iris-IRIS-OO",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "x": 520,
-        "y": 680,
-        "wires": [
-            [
-                "dc54df35d03be7bb"
-            ]
-        ]
-    },
-    {
-        "id": "8432a2b6bce8cbf6",
-        "type": "sf:node-red-iris-IRIS-INSERT",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "Create Class": false,
-        "x": 540,
-        "y": 540,
-        "wires": [
-            [
-                "c8178598c8bf558d"
-            ]
-        ]
-    },
-    {
-        "id": "b037d7be8fad51c5",
-        "type": "sf:node-red-iris-IRIS",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "holdConnection": 10,
-        "Check Connection": true,
-        "x": 510,
-        "y": 400,
-        "wires": [
-            [
-                "45394288c5a9a9bc"
-            ]
-        ]
-    },
-    {
-        "id": "ef913324c0e24797",
-        "type": "sf:node-red-iris-IRIS-CREATE",
-        "z": "582962ff6e21c7a7",
-        "name": "",
-        "IP": "localhost",
-        "Port": 1972,
-        "Namespace": "User",
-        "Username": "username",
-        "Password": "password",
-        "Check Connection": true,
-        "x": 540,
-        "y": 160,
-        "wires": [
-            [
-                "3ceba0ab8fb1c435"
-            ]
-        ]
-    },
-    {
         "id": "8b2d0c29ab414a90",
         "type": "inject",
         "z": "582962ff6e21c7a7",
@@ -1191,6 +1032,166 @@
         "wires": [
             [
                 "6d3e1eb949d83242"
+            ]
+        ]
+    },
+    {
+        "id": "d5bf7c2dbb8bbffe",
+        "type": "IRIS_CREATE",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "Check Connection": true,
+        "credentials": {},
+        "x": 540,
+        "y": 160,
+        "wires": [
+            [
+                "3ceba0ab8fb1c435"
+            ]
+        ]
+    },
+    {
+        "id": "01e364ac138917bc",
+        "type": "IRIS",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "x": 510,
+        "y": 400,
+        "wires": [
+            [
+                "45394288c5a9a9bc"
+            ]
+        ]
+    },
+    {
+        "id": "98947dc413f78d8f",
+        "type": "IRIS_INSERT",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "Create Class": false,
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "c8178598c8bf558d"
+            ]
+        ]
+    },
+    {
+        "id": "241576b6d5e92cab",
+        "type": "IRIS_OO",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "x": 520,
+        "y": 680,
+        "wires": [
+            [
+                "dc54df35d03be7bb"
+            ]
+        ]
+    },
+    {
+        "id": "6473d4275705ce34",
+        "type": "IRIS",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "x": 510,
+        "y": 820,
+        "wires": [
+            [
+                "2ba121aae06eb0a6"
+            ]
+        ]
+    },
+    {
+        "id": "7246377015c25b9b",
+        "type": "IRIS",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "x": 510,
+        "y": 960,
+        "wires": [
+            [
+                "5afec92a1aeaa9e2"
+            ]
+        ]
+    },
+    {
+        "id": "e629276f30272f90",
+        "type": "IRIS_DELETE_CLASS",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "Check Connection": true,
+        "x": 410,
+        "y": 1100,
+        "wires": [
+            [
+                "0dd7411e5e24dd43"
+            ]
+        ]
+    },
+    {
+        "id": "4c9a078e6f0f71bc",
+        "type": "IRIS",
+        "z": "582962ff6e21c7a7",
+        "name": "",
+        "IP": "localhost",
+        "Port": 1972,
+        "Namespace": "User",
+        "Username": "username",
+        "Password": "password",
+        "holdConnection": 10,
+        "Check Connection": true,
+        "x": 510,
+        "y": 1320,
+        "wires": [
+            [
+                "45bcc9f6888b1a57"
             ]
         ]
     }

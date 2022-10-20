@@ -29,17 +29,15 @@ if(process.platform == "win32" && process.arch == "x64") {
             }
         }
     } else if (distro == 'fedora') {
-        //native = require('./bin/lnxrhx64/irisnative.node');
-        console.log("--Native API--OS not supported!--");
+        // default to RH8 x64 for now
+        native = require('./bin/lnxrh8x64/irisnative.node');
     } else if (distro == 'rhx64') { //Red Hat 8
         native = require('./bin/lnxrh8x64/irisnative.node'); //included
     } else if (distro == 'rhel' && process.arch == 'arm64') {
-        //native = require('./bin/lnxrharm64/irisnative.node');
-        console.log("--Native API--OS not supported!--");
+        native = require('./bin/lnxrh8arm64/irisnative.node'); //included
     } else {
-        // default to RH for now
-        //native = require('./bin/lnxrhx64/irisnative.node');
-        console.log("--Native API--OS not supported!--");
+        // default to RH8 x64 for now
+        native = require('./bin/lnxrh8x64/irisnative.node');
     }
 }
 
