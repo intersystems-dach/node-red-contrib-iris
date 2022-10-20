@@ -1,3 +1,7 @@
+[v1.0.7](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.7)  (2022-10-20)
+--------------------------------------------------
+- README update
+
 [v1.0.6](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.6)  (2022-10-19)
 --------------------------------------------------
 - Bug fixes

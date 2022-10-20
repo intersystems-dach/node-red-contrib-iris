@@ -41,14 +41,18 @@ functionGlobalContext: {
     iris:require('C:/InterSystems/IRIS/dev/nodejs/intersystems-iris-native')
 }
 </pre>
-See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a>.
+
+You can find the API package in your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>
+
+See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a> for how to load additional modules into Node-RED.
 </p>
 </details>
 
 <details>
     <summary><b>Download Node.IRISInterface</b></summary>
     <p>
-        Go to <a href = 'https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls'>raw.githubusercontent</a>. Do a right click on page and choose <i>Save Page As...</i> . Import the class into Intersystems IRIS. When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access, map the class to namespace <b>%ALL</b>.
+        Go to <a href = 'https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls'>raw.githubusercontent</a>. Do a right click on the page and choose <i>Save Page As...</i> . Afterwards go to the InterSystems Management Portal and navigate to <i>System Explorer > Classes</i> and click on <i>Import</i>. There you select the file you just downloaded and click <i>Import</i>.<br>
+         When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access, <a href = "https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_namespace#GSA_config_namespace_addmap_all">map the class to namespace %ALL</a>.
     </p>
 </details>
 
@@ -126,7 +130,8 @@ msg.data = {
 <br>
 <a href= "https://www.npmjs.com/package/node-red-contrib-iris">npm</a><br>
 <a href= "https://github.com/phil1436/node-red-contrib-iris">GitHub</a><br>
-<a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a>
+<a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a><br>
+<a href= "https://community.intersystems.com/post/intersystems-iris-integration-node-red">InterSystems Developer Community</a>
 </p>
 <br>
 <p>by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
