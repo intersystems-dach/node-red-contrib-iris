@@ -1,0 +1,364 @@
+[
+    {
+        "id": "f728e4abf48e93ea",
+        "type": "tab",
+        "label": "SetServerProperties",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cc522d64f1552149",
+        "type": "file in",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 460,
+        "y": 400,
+        "wires": [
+            [
+                "d29052dc4cdfb35c"
+            ]
+        ]
+    },
+    {
+        "id": "9c8eaef510472295",
+        "type": "inject",
+        "z": "f728e4abf48e93ea",
+        "name": "set Properties",
+        "props": [
+            {
+                "p": "IP",
+                "v": "localhost",
+                "vt": "str"
+            },
+            {
+                "p": "Port",
+                "v": "1972",
+                "vt": "num"
+            },
+            {
+                "p": "Namespace",
+                "v": "User",
+                "vt": "str"
+            },
+            {
+                "p": "Username",
+                "v": "test",
+                "vt": "str"
+            },
+            {
+                "p": "Password",
+                "v": "test",
+                "vt": "str"
+            },
+            {
+                "p": "CheckConnection",
+                "v": "true",
+                "vt": "bool"
+            },
+            {
+                "p": "HidePassword",
+                "v": "false",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "bb772a6f206a0416"
+            ]
+        ]
+    },
+    {
+        "id": "a4ef48e2b81b399b",
+        "type": "change",
+        "z": "f728e4abf48e93ea",
+        "name": "set filername",
+        "rules": [
+            {
+                "t": "set",
+                "p": "filename",
+                "pt": "flow",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "0dfe1aac8bb6ed9c"
+            ]
+        ]
+    },
+    {
+        "id": "d29052dc4cdfb35c",
+        "type": "json",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 630,
+        "y": 400,
+        "wires": [
+            [
+                "b256ccf321af965b"
+            ]
+        ]
+    },
+    {
+        "id": "b256ccf321af965b",
+        "type": "function",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "func": "let props = msg.payload;\nprops['IP'] = msg.IP;\nprops['Port'] = msg.Port;\nprops['Namespace'] = msg.Namespace;\nprops['Username'] = msg.Username;\nprops['Password'] = msg.Password;\nprops['Check Connection'] = msg.CheckConnection;\nprops['Hide Password'] = msg.HidePassword;\nmsg.payload = props;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 400,
+        "wires": [
+            [
+                "ba0a16cc3c278d2b"
+            ]
+        ]
+    },
+    {
+        "id": "ba0a16cc3c278d2b",
+        "type": "file",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 940,
+        "y": 400,
+        "wires": [
+            [
+                "3676ee22fc27b7a7"
+            ]
+        ]
+    },
+    {
+        "id": "3676ee22fc27b7a7",
+        "type": "debug",
+        "z": "f728e4abf48e93ea",
+        "name": "print successful",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Successful! Now restart Node-RED!\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ac8ae4b131089c21",
+        "type": "file in",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "a4ef48e2b81b399b"
+            ]
+        ]
+    },
+    {
+        "id": "5e61722a2c4040d5",
+        "type": "inject",
+        "z": "f728e4abf48e93ea",
+        "name": "set File Name",
+        "props": [
+            {
+                "p": "filename",
+                "v": ".node-red/node_modules/node-red-contrib-iris/ServerProperties.json",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 200,
+        "wires": [
+            [
+                "ac8ae4b131089c21"
+            ]
+        ]
+    },
+    {
+        "id": "0dfe1aac8bb6ed9c",
+        "type": "debug",
+        "z": "f728e4abf48e93ea",
+        "name": "print successful",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "\"Successful! Set PRoperties now!\"",
+        "targetType": "jsonata",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "bb772a6f206a0416",
+        "type": "function",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "func": "if(flow.get('filename') == undefined){\n    throw \"Set the filename first!\"\n}\nmsg.filename = flow.get('filename')\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 400,
+        "wires": [
+            [
+                "cc522d64f1552149"
+            ]
+        ]
+    },
+    {
+        "id": "c9c38adc99544dcb",
+        "type": "catch",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "scope": [
+            "ac8ae4b131089c21"
+        ],
+        "uncaught": false,
+        "x": 340,
+        "y": 260,
+        "wires": [
+            [
+                "af5e06e547409fb9"
+            ]
+        ]
+    },
+    {
+        "id": "af5e06e547409fb9",
+        "type": "function",
+        "z": "f728e4abf48e93ea",
+        "name": "",
+        "func": "flow.set('filename',undefined);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "3eb7598060241fab"
+            ]
+        ]
+    },
+    {
+        "id": "3eb7598060241fab",
+        "type": "debug",
+        "z": "f728e4abf48e93ea",
+        "name": "print error",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error.message",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3275e4e36a72d39f",
+        "type": "comment",
+        "z": "f728e4abf48e93ea",
+        "name": "**WARNING: This flow will read and write file to your system!**",
+        "info": "",
+        "x": 310,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "38258850d871423e",
+        "type": "comment",
+        "z": "f728e4abf48e93ea",
+        "name": "First set the file path, typically its under ~/.node-red/node_modules/node-red-contrib-iris/ServerProperties.json",
+        "info": "",
+        "x": 460,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ea8b6407985d59c8",
+        "type": "comment",
+        "z": "f728e4abf48e93ea",
+        "name": "Sets the default server properties for node-red-contrib-iris",
+        "info": "",
+        "x": 290,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "768fa59d1e739c53",
+        "type": "comment",
+        "z": "f728e4abf48e93ea",
+        "name": "After you successful initialized the file name you can set the server properties.",
+        "info": "",
+        "x": 360,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "b3efb8ac4f694f25",
+        "type": "comment",
+        "z": "f728e4abf48e93ea",
+        "name": "Perfect now restart Node-RED.",
+        "info": "",
+        "x": 210,
+        "y": 500,
+        "wires": []
+    }
+]

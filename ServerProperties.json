@@ -3,5 +3,7 @@
     "Port": 1972,
     "Namespace": "User",
     "Username": "username",
-    "Password": "password"
+    "Password": "password",
+    "Check Connection":true,
+    "Hide Password":false
 }

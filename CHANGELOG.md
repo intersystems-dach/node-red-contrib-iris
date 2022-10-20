@@ -1,5 +1,8 @@
 [v1.0.7](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.7)  (2022-10-20)
 --------------------------------------------------
+- ServerProperties now supports 'Hide Password' and 'Check Connection'
+- SetServerProperties-Flow added
+- intersystems-iris-native added
 - README update
 
 [v1.0.6](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.6)  (2022-10-19)
