@@ -42,7 +42,7 @@ functionGlobalContext: {
 }
 </pre>
 
-You can find the API package under <code>~/.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "">README</a> for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
+You can find the API package under <code>~/.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native</code>. Please check the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md">README</a> for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: <code>~/IRIS/dev/nodejs/intersystems-iris-native</code>.
 
 See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules">documentation</a> for how to load additional modules into Node-RED.
 </p>
@@ -63,7 +63,7 @@ See the <a href = "https://nodered.org/docs/user-guide/writing-functions#loading
     </p>
         <img src = "https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/src/NodeProps.png" width = "400">
     <p>
-    You can set the default properties in <code>~/.node-red/node_modules/node-red-contrib-iris/ServerProperties.json</code>. Or use the <i>SetServerProperties flow</i> under <i>Import > Examples > node-red-contrib-iris > SetServerProperties</i>.
+    You can set the default properties in <code>~/.node-red/node_modules/node-red-contrib-iris/ServerProperties.json</code>. Or use the <a href = "https://github.com/phil1436/node-red-contrib-iris/blob/master/examples/SetServerProperties.json">SetServerProperties flow</a> under <i>Import > Examples > node-red-contrib-iris > SetServerProperties</i>.
     </p>
 </details>
 
