@@ -60,7 +60,7 @@ In the `~/.node-red/settings.js` file add module in (_already existing_) `functi
 ```javascript
 functionGlobalContext: {
     // os:require('os'),
-    iris: require('./node_modules/node-red-contrib-iris/intersystems-iris-native');
+    iris: require('./node_modules/node-red-contrib-iris/intersystems-iris-native'),
 }
 ```
 

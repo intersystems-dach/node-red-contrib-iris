@@ -2,7 +2,13 @@
 
 ---
 
-## [v1.0.8](https://www.npmjs.com/package/node-red-contrib-iris/v/1.0.8) (2022-10-20)
+## [v1.0.9](httpsX://www.npmjs.com/package/node-red-contrib-iris/v/1.0.9) (2023-8-23)
+
+-   Added Linux Ubuntu 22.04 LTS intersystems-iris-native support
+
+---
+
+## [v1.0.8](httpsX://www.npmjs.com/package/node-red-contrib-iris/v/1.0.8) (2022-10-20)
 
 -   Nodes name edited (Nodes already in your flows will not be found anymore, please replace them or downgrade package to 1.0.7!)
 -   ServerProperties now supports 'Hide Password' and 'Check Connection'
