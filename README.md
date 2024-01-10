@@ -1,6 +1,6 @@
 <div align="center">
     <br />
-    <img src="https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/src/InterSystemsLogo.png" alt="node-red-contrib-irisLogo" width="30%"/>
+    <img src="https://raw.githubusercontent.com/intersystems-dach/node-red-contrib-iris/master/src/InterSystemsLogo.png" alt="node-red-contrib-irisLogo" width="30%"/>
     <h1>node-red-contrib-iris</h1>
     <p>
         An interface for <a href = 'https://nodered.org/'>Node-RED</a> to <a href = 'https://www.intersystems.com/data-platform/'>InterSystems IRIS Data Platform</a>.
@@ -8,17 +8,17 @@
 </div>
 
 <div align="center">
-    <a href="https://github.com/phil1436/node-red-contrib-iris/releases">
-        <img src= "https://img.shields.io/github/v/release/phil1436/node-red-contrib-iris?display_name=tag" alt="current release">
+    <a href="https://github.com/intersystems-dach/node-red-contrib-iris/releases">
+        <img src= "https://img.shields.io/github/v/release/intersystems-dach/node-red-contrib-iris?display_name=tag" alt="current release">
     </a>
-    <a href="https://github.com/phil1436/node-red-contrib-iris/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/phil1436/node-red-contrib-iris" alt="license">
+    <a href="https://github.com/intersystems-dach/node-red-contrib-iris/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/intersystems-dach/node-red-contrib-iris" alt="license">
     </a>
-    <a href="https://github.com/phil1436/node-red-contrib-iris/stargazers">
-        <img src="https://img.shields.io/github/stars/phil1436/node-red-contrib-iris" alt="stars">
+    <a href="https://github.com/intersystems-dach/node-red-contrib-iris/stargazers">
+        <img src="https://img.shields.io/github/stars/intersystems-dach/node-red-contrib-iris" alt="stars">
     </a>
-    <a href="https://github.com/phil1436/node-red-contrib-iris/commits/master">
-        <img src="https://img.shields.io/github/last-commit/phil1436/node-red-contrib-iris" alt="last commit">
+    <a href="https://github.com/intersystems-dach/node-red-contrib-iris/commits/master">
+        <img src="https://img.shields.io/github/last-commit/intersystems-dach/node-red-contrib-iris" alt="last commit">
     </a>
 </div>
 
@@ -39,7 +39,7 @@
 ## Requirements
 
 -   [Native API](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=PAGE_nodejs_native) (_v 1.2.0_) installed in Node-RED.
--   [Node.IRISInterface](https://github.com/phil1436/node-red-iris/tree/master/ObjectScript) (_v 1.3_) class installed in Intersystems IRIS.
+-   [Node.IRISInterface](https://github.com/intersystems-dach/node-red-iris/tree/master/ObjectScript) (_v 1.3_) class installed in Intersystems IRIS.
 
 ---
 
@@ -64,13 +64,13 @@ functionGlobalContext: {
 }
 ```
 
-You can find the API package under `.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native`. Please check the [README](https://github.com/phil1436/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md) file for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: `~/IRIS/dev/nodejs/intersystems-iris-native`.
+You can find the API package under `.node-red/node_modules/node-red-contrib-iris/intersystems-iris-native`. Please check the [README](https://github.com/intersystems-dach/node-red-contrib-iris/blob/master/intersystems-iris-native/README.md) file for supported operating systems. If your OS is not supported you can get the API from your Intersystems IRIS instance under: `~/IRIS/dev/nodejs/intersystems-iris-native`.
 
 See the [documentation](https://nodered.org/docs/user-guide/writing-functions#loading-additional-modules) for how to load additional modules into Node-RED.
 
 ### Download Node.IRISInterface
 
-Go to [raw.githubusercontent](https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls). Do a right click on the page and choose _Save Page As..._ . Afterwards go to the InterSystems Management Portal and navigate to _System Explorer > Classes_ and click on _Import_. There you select the file you just downloaded and click _Import_.
+Go to [raw.githubusercontent](https://raw.githubusercontent.com/intersystems-dach/node-red-contrib-iris/master/ObjectScript/Node.IRISInterface.cls). Do a right click on the page and choose _Save Page As..._ . Afterwards go to the InterSystems Management Portal and navigate to _System Explorer > Classes_ and click on _Import_. There you select the file you just downloaded and click _Import_.
 When you only operate in one namespace, import the class into this namespace. When you have multiple namespaces you want to have access to, [map the class to namespace _%ALL_](https://docs.intersystems.com/iris20221/csp/docbook/DocBook.UI.Page.cls?KEY=GSA_config_namespace#GSA_config_namespace_addmap_all).
 
 ---
@@ -79,9 +79,9 @@ When you only operate in one namespace, import the class into this namespace. Wh
 
 Set connection properties via the node properties. The Node will build a connection when you deploy and will hold that connection up until you redeploy or disconnect manually.
 
-<img src = "https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/src/NodeProps.png" width = "400" alt="NodeProperties">
+<img src = "https://raw.githubusercontent.com/intersystems-dach/node-red-contrib-iris/master/src/NodeProps.png" width = "400" alt="NodeProperties">
 
-You can set the default properties in `~/.node-red/node_modules/node-red-contrib-iris/ServerProperties.json`. Or use the [SetServerProperties flow](https://github.com/phil1436/node-red-contrib-iris/blob/master/examples/SetServerProperties.json) under _Import > Examples > node-red-contrib-iris > SetServerProperties_.
+You can set the default properties in `~/.node-red/node_modules/node-red-contrib-iris/ServerProperties.json`. Or use the [SetServerProperties flow](https://github.com/intersystems-dach/node-red-contrib-iris/blob/master/examples/SetServerProperties.json) under _Import > Examples > node-red-contrib-iris > SetServerProperties_.
 
 ---
 
@@ -114,7 +114,7 @@ msg.data = {
 -   **IRIS_OO** - Can insert a hierarchical JSON-Object.
 -   **IRIS_CALL** - Call Intersystems IRIS classmethods.
 
-<img src = "https://raw.githubusercontent.com/phil1436/node-red-contrib-iris/master/src/NodesOverview.png" width = "200">
+<img src = "https://raw.githubusercontent.com/intersystems-dach/node-red-contrib-iris/master/src/NodesOverview.png" width = "200">
 
 > See Node description for further informations.
 
@@ -145,10 +145,10 @@ msg.data = {
 <p>
 <br>
 <a href= "https://www.npmjs.com/package/node-red-contrib-iris">npm</a><br>
-<a href= "https://github.com/phil1436/node-red-contrib-iris">GitHub</a><br>
+<a href= "https://github.com/intersystems-dach/node-red-contrib-iris">GitHub</a><br>
 <a href= "https://flows.nodered.org/node/node-red-contrib-iris">nodered.org</a><br>
-<a href= "https://github.com/phil1436/node-red-contrib-iris/blob/master/CHANGELOG.md">CHANGELOG</a><br>
+<a href= "https://github.com/intersystems-dach/node-red-contrib-iris/blob/master/CHANGELOG.md">CHANGELOG</a><br>
 <a href= "https://community.intersystems.com/post/intersystems-iris-integration-node-red">InterSystems Developer Community</a>
 </p>
 <br>
-<p>by Philipp Bonin<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
+<p>by Philipp B.<br>Powered by <a href= "https://www.intersystems.com/" style="color: #00b4ae">InterSystems</a>.</p>
